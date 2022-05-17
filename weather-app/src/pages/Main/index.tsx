@@ -1,31 +1,63 @@
-import React from "react";
-import { Button } from "@mui/material";
+import React, { useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "../../hooks/redux";
-import { counterSlice } from "../../store/reducers/testSlice";
-import { Clock } from "../../components";
+import { Clock, EditableInput } from "../../components";
+import { usePosition } from "../../hooks/usePosition";
+import { fetchCity } from "../../store/reducers/citySlice";
+import { Geocoding, openWeather, openWeatherDaily } from "../../constants";
+import { fetchCoord, fetchWeather } from "../../store/reducers/weatherSlice";
 
 function Main() {
-  const { count } = useAppSelector((state) => state.testSlice);
   const dispatch = useAppDispatch();
+  const { city } = useAppSelector((state) => state.citySlice);
+  const { lat, lon, weather } = useAppSelector((state) => state.weatherSlice);
+  const { latitude, longitude, error } = usePosition();
 
-  const handleIncrement = () => {
-    dispatch(counterSlice.actions.increment());
-  };
+  // async function setRequest(str?: string) {
+  //   if (latitude && longitude) {
+  //     const src = Geocoding(latitude, longitude);
+  //     dispatch(fetchCity(src));
+  //   }
+  // }
 
-  const handleDecrement = () => {
-    dispatch(counterSlice.actions.decrement());
-  };
+  // useEffect(() => {
+  //   setRequest();
+  // }, [latitude, longitude]);
+
+  async function setWeatherRequest(str?: string) {
+    if (city) {
+      const src = openWeather(city);
+      dispatch(fetchCoord(src));
+    }
+  }
+
+  useEffect(() => {
+    setWeatherRequest();
+    if (lat && lon) {
+      const src = openWeatherDaily(lat, lon);
+      dispatch(fetchWeather(src));
+    }
+  }, [city, lat, lon]);
 
   return (
     <div className="App">
       <Clock />
-      <div>{count}</div>
-      <Button variant="contained" color="secondary" onClick={handleIncrement}>
-        +
-      </Button>
-      <Button variant="contained" color="secondary" onClick={handleDecrement}>
-        -
-      </Button>
+      <EditableInput />
+      {weather.length > 6
+        ? weather.map((day) => (
+            <>
+              <div>{day.temp.max.toString()}</div>
+              <img
+                src={`http://openweathermap.org/img/wn/${day.weather[0].icon}@2x.png`}
+                alt=""
+              />
+              <p>
+                {new Date(day.dt).toLocaleString("en-US", {
+                  weekday: "long",
+                })}
+              </p>
+            </>
+          ))
+        : "Not correct request"}
     </div>
   );
 }
