@@ -1,64 +1,106 @@
 import React, { useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "../../hooks/redux";
-import { Clock, EditableInput } from "../../components";
+import { Clock, Day, EditableInput, Today } from "../../components";
 import { usePosition } from "../../hooks/usePosition";
 import { fetchCity } from "../../store/reducers/citySlice";
-import { Geocoding, openWeather, openWeatherDaily } from "../../constants";
-import { fetchCoord, fetchWeather } from "../../store/reducers/weatherSlice";
+import { ColumnBox, BackgroundBox, Section } from "./Container.styled";
+import { Geocoding } from "../../utils";
+import { weatherSlice, fetchImage } from "../../store/reducers/weatherSlice";
+import { useGetLocationQuery, useGetWeatherQuery } from "../../services";
+import { skipToken } from "@reduxjs/toolkit/dist/query";
 
 function Main() {
   const dispatch = useAppDispatch();
   const { city } = useAppSelector((state) => state.citySlice);
-  const { lat, lon, weather } = useAppSelector((state) => state.weatherSlice);
   const { latitude, longitude, error } = usePosition();
+  const { bgImage, openWeather } = useAppSelector(
+    (state) => state.weatherSlice
+  );
 
-  // async function setRequest(str?: string) {
-  //   if (latitude && longitude) {
-  //     const src = Geocoding(latitude, longitude);
-  //     dispatch(fetchCity(src));
-  //   }
-  // }
-
-  // useEffect(() => {
-  //   setRequest();
-  // }, [latitude, longitude]);
-
-  async function setWeatherRequest(str?: string) {
-    if (city) {
-      const src = openWeather(city);
-      dispatch(fetchCoord(src));
+  async function getPosition() {
+    if (latitude && longitude && !error && !city) {
+      const src = Geocoding(latitude, longitude);
+      dispatch(fetchCity(src));
     }
   }
 
   useEffect(() => {
-    setWeatherRequest();
-    if (lat && lon) {
-      const src = openWeatherDaily(lat, lon);
-      dispatch(fetchWeather(src));
+    getPosition();
+  }, [latitude, longitude]);
+
+  // const { data } = useGetWeatherStormQuery({
+  //   lat: lat,
+  //   lon: lon,
+  // });
+
+  // console.log(data);
+
+  const { data: location, isSuccess } = useGetLocationQuery(
+    !openWeather.hasOwnProperty(city) && city !== ""
+      ? { city: city }
+      : skipToken
+  );
+  const { data: weather, isSuccess: isWeatherSuccess } = useGetWeatherQuery(
+    isSuccess && location.length > 0
+      ? { lat: location[0].lat, lon: location[0].lon }
+      : skipToken
+  );
+
+  useEffect(() => {
+    if (isWeatherSuccess) {
+      dispatch(fetchImage(weather.daily[0].weather[0].main));
+      dispatch(
+        weatherSlice.actions.addToOpenWeather({
+          city: city,
+          weather: weather.daily,
+        })
+      );
     }
-  }, [city, lat, lon]);
+  }, [isWeatherSuccess]);
 
   return (
-    <div className="App">
-      <Clock />
-      <EditableInput />
-      {weather.length > 6
-        ? weather.map((day) => (
-            <>
-              <div>{day.temp.max.toString()}</div>
-              <img
-                src={`http://openweathermap.org/img/wn/${day.weather[0].icon}@2x.png`}
-                alt=""
-              />
-              <p>
-                {new Date(day.dt).toLocaleString("en-US", {
-                  weekday: "long",
-                })}
-              </p>
-            </>
-          ))
-        : "Not correct request"}
-    </div>
+    <ColumnBox
+      style={{
+        backgroundImage: `url(${bgImage || "./шфидщ.png"})`,
+      }}
+    >
+      <BackgroundBox
+        style={{
+          backgroundImage: `url(${bgImage || "./шфидщ.png"})`,
+        }}
+      >
+        <Section>
+          <Clock />
+          <EditableInput />
+        </Section>
+        <Section
+          sx={{
+            background: "rgba(35, 41, 70, 0.6)",
+          }}
+        >
+          {openWeather[city]
+            ? openWeather[city]
+                .slice(0, 7)
+                .map((day, index) =>
+                  index === 0 ? (
+                    <Today
+                      imgCode={day.weather[0].icon}
+                      temp={day.temp.day}
+                      key={day.dt}
+                    />
+                  ) : (
+                    <Day
+                      day={day.dt}
+                      imgCode={day.weather[0].icon}
+                      temp={day.temp.day}
+                      key={day.dt}
+                    />
+                  )
+                )
+            : "Not correct request"}
+        </Section>
+      </BackgroundBox>
+    </ColumnBox>
   );
 }
 

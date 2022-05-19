@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useAppDispatch, useAppSelector } from "../../hooks/redux";
 import { citySlice } from "../../store/reducers/citySlice";
+import { theme } from "../../theme";
 
 interface IFormData {
   name: string;
@@ -17,11 +18,10 @@ function EditableInput() {
   });
 
   const onSubmit = async (data: IFormData) => {
-    const res = data.name !== "" ? data.name : city;
+    const res = data.name || city;
     setIsEditing(false);
     dispatch(citySlice.actions.changeCity(res));
     setValue("name", res);
-    //request
   };
 
   return (
@@ -31,18 +31,19 @@ function EditableInput() {
           component="form"
           onSubmit={handleSubmit(onSubmit)}
           onBlur={handleSubmit(onSubmit)}
-          sx={{ pt: "10px" }}
         >
           <TextField
             {...register("name")}
             type="text"
+            variant="outlined"
             defaultValue={city}
             size="small"
             inputProps={{
               style: {
                 padding: "10px 10px",
-                fontSize: "1.25rem",
+                fontSize: "2.5rem",
                 fontWeight: "bold",
+                direction: "rtl",
               },
             }}
             autoFocus
@@ -51,7 +52,9 @@ function EditableInput() {
       ) : (
         <Typography
           onClick={() => setIsEditing(true)}
-          sx={{ p: "10px 10px", fontWeight: "bold", fontSize: "1.25rem" }}
+          component="h1"
+          sx={{ p: "10px 10px", fontWeight: "bold", fontSize: "2.5rem" }}
+          color={theme.palette.text.primary}
         >
           {city}
         </Typography>

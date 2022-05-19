@@ -1,43 +1,22 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { WeatherState, IWeatherPerDay } from "../../../models";
 
-interface IWeatherPerDay {
-  dt: number;
-  temp: {
-    day: number;
-  };
-  weather: [
-    {
-      id: number;
-    }
-  ];
-}
-
-interface WeatherState {
-  city: string;
-  lat: string;
-  lon: string;
-  weather: IWeatherPerDay[];
-}
-
-const initialState: WeatherState = {
-  city: "",
-  lat: "",
-  lon: "",
-  weather: [],
+const state: WeatherState = {
+  bgImage: "",
+  openWeather: {},
+  stormGlass: {},
 };
 
-export const fetchCoord = createAsyncThunk(
-  "weather/fetchCoord",
-  async (src: string, thynkAPI) => {
-    const res = await fetch(src).then((data) => data.json());
-    return res;
-  }
-);
+const initialState: WeatherState = localStorage.getItem("WeatherState")
+  ? JSON.parse(String(localStorage.getItem("WeatherState")))
+  : state;
 
-export const fetchWeather = createAsyncThunk(
-  "weather/fetchWeather",
-  async (src: string, thynkAPI) => {
-    const res = await fetch(src).then((data) => data.json());
+export const fetchImage = createAsyncThunk(
+  "weather/fetchImage",
+  async (WeatherMain: string, thynkAPI) => {
+    const res = await fetch(
+      `https://api.unsplash.com/photos/random?orientation=landscape&query=${WeatherMain}&client_id=ki8jihwvAV1A8W4WBkNVcgK8NP-dUdxocfg_brGsuxE`
+    ).then((data) => data.json());
     return res;
   }
 );
@@ -46,34 +25,20 @@ export const weatherSlice = createSlice({
   name: "weather",
   initialState,
   reducers: {
-    changeCity: (state, action) => {
-      state.city = action.payload;
+    addToOpenWeather: (
+      state,
+      action: PayloadAction<{ city: string; weather: IWeatherPerDay[] }>
+    ) => {
+      if (!state.openWeather.hasOwnProperty(action.payload.city)) {
+        state.openWeather[action.payload.city] = action.payload.weather;
+      }
+      localStorage.setItem("WeatherState", JSON.stringify(state));
     },
   },
   extraReducers: {
-    [fetchCoord.pending.type]: (state) => {
-      // console.log("pending weather coord");
-    },
-    [fetchCoord.fulfilled.type]: (state, action) => {
-      console.log("fulfilled weather coord", action.payload);
-      if (action.payload.length > 0) {
-        state.lat = action.payload[0].lat;
-        state.lon = action.payload[0].lon;
-      } else {
-        state.lat = '';
-        state.lon = '';
-        state.weather = [];
-      }
-    },
-    [fetchCoord.rejected.type]: (state) => {
-      // console.log("rejected");
-    },
-    [fetchWeather.fulfilled.type]: (state, action) => {
-      console.log("fulfilled weather");
-      console.log(action.payload);
-      state.weather = action.payload.daily.map((day: IWeatherPerDay) => {
-        return { dt: day.dt * 1000, temp: day.temp, weather: day.weather };
-      });
+    [fetchImage.fulfilled.type]: (state, action) => {
+      console.log("fulfilled image");
+      state.bgImage = action.payload.urls.regular;
     },
   },
 });

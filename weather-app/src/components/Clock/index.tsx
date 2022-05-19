@@ -1,33 +1,35 @@
+import { Typography } from "@mui/material";
 import React, { useEffect, useState } from "react";
+import { theme } from "../../theme";
 
 function Clock() {
   const [date, setDate] = useState(new Date());
 
   useEffect(() => {
-    const timerID = setInterval( () => tick(), 1000 );
+    const timerID = setInterval(() => tick(), 1000);
     return function cleanup() {
-        clearInterval(timerID);
-      };
-   });
-  
+      clearInterval(timerID);
+    };
+  });
+
   function tick() {
     setDate(new Date());
-   }
+  }
 
   return (
-    <>
-      <h1>
+    <div>
+      <Typography component="h2" color={theme.palette.text.primary} sx={{fontSize: '4rem'}}>
         {date.toLocaleString("en-US", { hour: "2-digit", minute: "2-digit" })}
-      </h1>
-      <h1>
+      </Typography>
+      <Typography component="h2" color={theme.palette.text.primary} sx={{fontSize: '2rem'}}>
         {date.toLocaleString("en-US", {
           weekday: "long",
           year: "numeric",
           month: "long",
           day: "numeric",
         })}
-      </h1>
-    </>
+      </Typography>
+    </div>
   );
 }
 

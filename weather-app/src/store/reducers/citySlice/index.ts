@@ -1,12 +1,16 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-interface CityState {
+export interface CityState {
   city: string;
 }
 
-const initialState: CityState = {
+const state: CityState = {
   city: "",
 };
+
+const initialState: CityState = localStorage.getItem("CityState")
+  ? JSON.parse(String(localStorage.getItem("CityState")))
+  : state;
 
 export const fetchCity = createAsyncThunk(
   "city/fetchCard",
@@ -20,20 +24,14 @@ export const citySlice = createSlice({
   name: "city",
   initialState,
   reducers: {
-    changeCity: (state, action) => {
+    changeCity: (state, action: PayloadAction<string>) => {
       state.city = action.payload;
+      localStorage.setItem("CityState", JSON.stringify(state))
     },
   },
   extraReducers: {
-    [fetchCity.pending.type]: (state) => {
-      console.log("pending city");
-    },
     [fetchCity.fulfilled.type]: (state, action) => {
-      console.log("fulfilled city");
       state.city = action.payload.features[0].text;
-    },
-    [fetchCity.rejected.type]: (state) => {
-      console.log("rejected city");
     },
   },
 });

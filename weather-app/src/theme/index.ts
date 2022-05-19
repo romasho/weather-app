@@ -3,21 +3,19 @@ import { createTheme } from '@mui/material';
 export const theme = createTheme({
   palette: {
     primary: {
-      main: '#7ac5c5',
+      main: '#b8c1ec',
+      dark: '#b8c1ec',
     },
     secondary: {
-      main: '#ffd803',
+      main: '#b8c1ec',
     },
     background: {
-      paper: '#e3f6f5',
-      default: '#fffffe',
-    },
-    error: {
-      main: '#ff2a1b',
+      default: '#232946',
+      paper: '#232946',
     },
     text: {
-      primary: '#272343',
-      secondary: '#2d334a',
+      primary: '#b8c1ec',
+      secondary: '#b8c1ec',
     },
   },
 });
