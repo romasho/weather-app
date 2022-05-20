@@ -10,6 +10,7 @@ export interface IStormGlassData {
 export interface ICoord {
   lat: string;
   lon: string;
+  name: string;
 }
 
 export interface IWeatherPerDay {
@@ -45,4 +46,5 @@ export interface WeatherState {
   bgImage: string;
   openWeather: IOpenWeather;
   stormGlass: IStormGlass;
+  expiresDate: string;
 }

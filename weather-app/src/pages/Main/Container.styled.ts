@@ -26,7 +26,7 @@ const Section = styled("section")(({ theme }) => ({
   justifyContent: "space-between",
   alignItems: "center",
   padding: "1.5rem",
+  position: "relative",
 }));
-
 
 export { ColumnBox, BackgroundBox, Section };

@@ -1,15 +1,20 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { WeatherState, IWeatherPerDay } from "../../../models";
+import { getTomorrow } from "../../../utils";
 
 const state: WeatherState = {
   bgImage: "",
   openWeather: {},
   stormGlass: {},
+  expiresDate: String(getTomorrow()),
 };
 
-const initialState: WeatherState = localStorage.getItem("WeatherState")
-  ? JSON.parse(String(localStorage.getItem("WeatherState")))
-  : state;
+const initialState: WeatherState =
+  localStorage.getItem("WeatherState") &&
+  JSON.parse(String(localStorage.getItem("WeatherState"))).expiresDate ===
+  getTomorrow()
+    ? JSON.parse(String(localStorage.getItem("WeatherState")))
+    : state;
 
 export const fetchImage = createAsyncThunk(
   "weather/fetchImage",
@@ -31,6 +36,17 @@ export const weatherSlice = createSlice({
     ) => {
       if (!state.openWeather.hasOwnProperty(action.payload.city)) {
         state.openWeather[action.payload.city] = action.payload.weather;
+        state.expiresDate = String(getTomorrow());
+      }
+      localStorage.setItem("WeatherState", JSON.stringify(state));
+    },
+    addToStormGlass: (
+      state,
+      action: PayloadAction<{ city: string; weather: IWeatherPerDay[] }>
+    ) => {
+      if (!state.openWeather.hasOwnProperty(action.payload.city)) {
+        state.openWeather[action.payload.city] = action.payload.weather;
+        state.expiresDate = String(getTomorrow());
       }
       localStorage.setItem("WeatherState", JSON.stringify(state));
     },

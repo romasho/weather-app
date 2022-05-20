@@ -1,13 +1,20 @@
 import React, { useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "../../hooks/redux";
-import { Clock, Day, EditableInput, Today } from "../../components";
+import {
+  Clock,
+  Day,
+  EditableInput,
+  Today,
+  SourceSettings,
+} from "../../components";
 import { usePosition } from "../../hooks/usePosition";
 import { fetchCity } from "../../store/reducers/citySlice";
 import { ColumnBox, BackgroundBox, Section } from "./Container.styled";
 import { Geocoding } from "../../utils";
 import { weatherSlice, fetchImage } from "../../store/reducers/weatherSlice";
 import { useGetLocationQuery, useGetWeatherQuery } from "../../services";
-import { skipToken } from "@reduxjs/toolkit/dist/query";
+import { Typography } from "@mui/material";
+import { theme } from "../../theme";
 
 function Main() {
   const dispatch = useAppDispatch();
@@ -28,23 +35,29 @@ function Main() {
     getPosition();
   }, [latitude, longitude]);
 
-  // const { data } = useGetWeatherStormQuery({
+  const { data: location } = useGetLocationQuery(
+    { city: city },
+    { skip: !openWeather.hasOwnProperty(city) && !city }
+  );
+
+  const { lat, lon } = location?.length ? location[0] : { lat: "", lon: "" };
+
+  const {
+    data: weather,
+    isSuccess: isWeatherSuccess,
+    isError,
+  } = useGetWeatherQuery(
+    {
+      lat: lat,
+      lon: lon,
+    }
+  );
+
+    // const { data } = useGetWeatherStormQuery({
   //   lat: lat,
   //   lon: lon,
   // });
 
-  // console.log(data);
-
-  const { data: location, isSuccess } = useGetLocationQuery(
-    !openWeather.hasOwnProperty(city) && city !== ""
-      ? { city: city }
-      : skipToken
-  );
-  const { data: weather, isSuccess: isWeatherSuccess } = useGetWeatherQuery(
-    isSuccess && location.length > 0
-      ? { lat: location[0].lat, lon: location[0].lon }
-      : skipToken
-  );
 
   useEffect(() => {
     if (isWeatherSuccess) {
@@ -55,6 +68,7 @@ function Main() {
           weather: weather.daily,
         })
       );
+      console.log(location, weather);
     }
   }, [isWeatherSuccess]);
 
@@ -72,32 +86,59 @@ function Main() {
         <Section>
           <Clock />
           <EditableInput />
+          <SourceSettings />
         </Section>
         <Section
           sx={{
             background: "rgba(35, 41, 70, 0.6)",
           }}
         >
-          {openWeather[city]
-            ? openWeather[city]
-                .slice(0, 7)
-                .map((day, index) =>
-                  index === 0 ? (
-                    <Today
-                      imgCode={day.weather[0].icon}
-                      temp={day.temp.day}
-                      key={day.dt}
-                    />
-                  ) : (
-                    <Day
-                      day={day.dt}
-                      imgCode={day.weather[0].icon}
-                      temp={day.temp.day}
-                      key={day.dt}
-                    />
-                  )
+          {isError ? (
+            <Typography
+              sx={{ p: "10px 10px", fontWeight: "bold", fontSize: "2.5rem" }}
+              color={theme.palette.text.primary}
+            >
+              Not correct request
+            </Typography>
+          ) : !openWeather.hasOwnProperty(city) ? (
+            weather?.daily
+              .slice(0, 7)
+              .map((day, index) =>
+                index === 0 ? (
+                  <Today
+                    imgCode={day.weather[0].icon}
+                    temp={day.temp.day}
+                    key={day.dt}
+                  />
+                ) : (
+                  <Day
+                    day={day.dt * 1000}
+                    imgCode={day.weather[0].icon}
+                    temp={day.temp.day}
+                    key={day.dt}
+                  />
                 )
-            : "Not correct request"}
+              )
+          ) : (
+            openWeather[city]
+              .slice(0, 7)
+              .map((day, index) =>
+                index === 0 ? (
+                  <Today
+                    imgCode={day.weather[0].icon}
+                    temp={day.temp.day}
+                    key={day.dt}
+                  />
+                ) : (
+                  <Day
+                    day={day.dt * 1000}
+                    imgCode={day.weather[0].icon}
+                    temp={day.temp.day}
+                    key={day.dt}
+                  />
+                )
+              )
+          )}
         </Section>
       </BackgroundBox>
     </ColumnBox>

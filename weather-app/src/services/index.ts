@@ -6,7 +6,6 @@ const BASE_URL = "https://api.stormglass.io/v2/weather/";
 
 const stormGlassApi = createApi({
   reducerPath: "stormGlassApi",
-  keepUnusedDataFor: 36000,
   baseQuery: fetchBaseQuery({
     baseUrl: BASE_URL,
     prepareHeaders: (headers) => {
