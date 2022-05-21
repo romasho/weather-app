@@ -20,9 +20,14 @@ function Weather() {
     (state) => state.weatherSlice
   );
 
-  const { data: location } = useGetLocationQuery(
+  const { data: location, isSuccess } = useGetLocationQuery(
     { city: city },
-    { skip: (isfirstSource ? openWeather.hasOwnProperty(city) : stormGlass.hasOwnProperty(city)) && !!city}
+    {
+      skip:
+        (isfirstSource
+          ? openWeather.hasOwnProperty(city)
+          : stormGlass.hasOwnProperty(city)) && !!city,
+    }
   );
 
   const { lat, lon } = location?.length ? location[0] : { lat: "", lon: "" };
@@ -36,7 +41,11 @@ function Weather() {
       lat: lat,
       lon: lon,
     },
-    { skip: openWeather.hasOwnProperty(city) && isfirstSource }
+    {
+      skip:  isfirstSource
+      ? openWeather.hasOwnProperty(city)
+      : openWeather.hasOwnProperty(city) && stormGlass.hasOwnProperty(city),
+    }
   );
 
   const { data, isSuccess: isStormGlassSucces } = useGetWeatherStormQuery(
@@ -44,10 +53,17 @@ function Weather() {
       lat: lat,
       lon: lon,
     },
-    { skip: stormGlass.hasOwnProperty(city) ? isfirstSource : stormGlass.hasOwnProperty(city) }
+    { skip: isfirstSource ? true : stormGlass.hasOwnProperty(city) }
   );
 
-  console.log(stormGlass.hasOwnProperty(city) ? isfirstSource : stormGlass.hasOwnProperty(city))
+  console.log(
+    "1 = ",
+    isfirstSource
+        ? openWeather.hasOwnProperty(city) && !isWeatherSuccess
+        : openWeather.hasOwnProperty(city) && stormGlass.hasOwnProperty(city) && !isWeatherSuccess,
+    "2 =",
+    isfirstSource ? true : stormGlass.hasOwnProperty(city)
+  );
 
   useEffect(() => {
     if (isWeatherSuccess) {
