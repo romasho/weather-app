@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { WeatherState, IWeatherPerDay } from "../../../models";
+import { WeatherState, IWeatherPerDay, ITempInfo } from "../../../models";
 import { getTomorrow } from "../../../utils";
 
 const state: WeatherState = {
@@ -12,7 +12,7 @@ const state: WeatherState = {
 const initialState: WeatherState =
   localStorage.getItem("WeatherState") &&
   JSON.parse(String(localStorage.getItem("WeatherState"))).expiresDate ===
-  getTomorrow()
+  String(getTomorrow())
     ? JSON.parse(String(localStorage.getItem("WeatherState")))
     : state;
 
@@ -35,17 +35,19 @@ export const weatherSlice = createSlice({
       action: PayloadAction<{ city: string; weather: IWeatherPerDay[] }>
     ) => {
       if (!state.openWeather.hasOwnProperty(action.payload.city)) {
-        state.openWeather[action.payload.city] = action.payload.weather;
+        state.openWeather[action.payload.city] = action.payload.weather.map((day: IWeatherPerDay) => {
+          return { dt: day.dt, temp: day.temp, weather: day.weather };
+        });
         state.expiresDate = String(getTomorrow());
       }
       localStorage.setItem("WeatherState", JSON.stringify(state));
     },
     addToStormGlass: (
       state,
-      action: PayloadAction<{ city: string; weather: IWeatherPerDay[] }>
+      action: PayloadAction<{ city: string; weather: ITempInfo[] }>
     ) => {
-      if (!state.openWeather.hasOwnProperty(action.payload.city)) {
-        state.openWeather[action.payload.city] = action.payload.weather;
+      if (!state.stormGlass.hasOwnProperty(action.payload.city)) {
+        state.stormGlass[action.payload.city] = action.payload.weather;
         state.expiresDate = String(getTomorrow());
       }
       localStorage.setItem("WeatherState", JSON.stringify(state));
@@ -53,7 +55,6 @@ export const weatherSlice = createSlice({
   },
   extraReducers: {
     [fetchImage.fulfilled.type]: (state, action) => {
-      console.log("fulfilled image");
       state.bgImage = action.payload.urls.regular;
     },
   },

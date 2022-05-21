@@ -1,6 +1,4 @@
 import { Box, Typography } from "@mui/material";
-import { transform } from "typescript";
-import { theme } from "../../theme";
 
 interface IDayProps {
   imgCode: string;
@@ -17,13 +15,13 @@ function Today({ imgCode, temp }: IDayProps) {
       />
       <Box>
         <Typography
-          color={theme.palette.text.primary}
+          color="white"
           sx={{ fontSize: "2rem", textTransform: "uppercase" }}
         >
           Today
         </Typography>
         <Typography
-          color={theme.palette.text.primary}
+          color="white"
           sx={{ fontSize: "4rem" }}
         >{`${Math.floor(temp)}°`}</Typography>
       </Box>

@@ -1,6 +1,6 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { tokenOpenWeather } from "../constants";
-import { ICoord, IStormGlassData, IOpenWeatherResponse } from "../models";
+import { ICoord, IStormGlassResponse, IOpenWeatherResponse } from "../models";
 
 const BASE_URL = "https://api.stormglass.io/v2/weather/";
 
@@ -20,10 +20,7 @@ const stormGlassApi = createApi({
     },
   }),
   endpoints: (builder) => ({
-    getWeatherStorm: builder.query<
-      IStormGlassData,
-      { lat: string; lon: string }
-    >({
+    getWeatherStorm: builder.query<IStormGlassResponse, { lat: string; lon: string }>({
       query: ({ lat, lon }) => ({
         url: `point?lat=${lat}&lng=${lon}&params=airTemperature`,
       }),

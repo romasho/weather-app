@@ -3,7 +3,6 @@ import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useAppDispatch, useAppSelector } from "../../hooks/redux";
 import { citySlice } from "../../store/reducers/citySlice";
-import { theme } from "../../theme";
 
 interface IFormData {
   name: string;
@@ -44,6 +43,7 @@ function EditableInput() {
                 fontSize: "2.5rem",
                 fontWeight: "bold",
                 direction: "rtl",
+                color: "white"
               },
             }}
             autoFocus
@@ -54,7 +54,7 @@ function EditableInput() {
           onClick={() => setIsEditing(true)}
           component="h1"
           sx={{ p: "10px 10px", fontWeight: "bold", fontSize: "2.5rem" }}
-          color={theme.palette.text.primary}
+          color="white"
         >
           {city}
         </Typography>

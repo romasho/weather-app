@@ -1,6 +1,5 @@
 import { Typography } from "@mui/material";
 import React, { useEffect, useState } from "react";
-import { theme } from "../../theme";
 
 function Clock() {
   const [date, setDate] = useState(new Date());
@@ -18,10 +17,10 @@ function Clock() {
 
   return (
     <div>
-      <Typography component="h2" color={theme.palette.text.primary} sx={{fontSize: '4rem'}}>
+      <Typography component="h2" color="white" sx={{ fontSize: "4rem" }}>
         {date.toLocaleString("en-US", { hour: "2-digit", minute: "2-digit" })}
       </Typography>
-      <Typography component="h2" color={theme.palette.text.primary} sx={{fontSize: '2rem'}}>
+      <Typography component="h2" color="white" sx={{ fontSize: "2rem" }}>
         {date.toLocaleString("en-US", {
           weekday: "long",
           year: "numeric",

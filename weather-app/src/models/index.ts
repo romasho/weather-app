@@ -3,7 +3,7 @@ export interface ITempInfo {
   time: string;
 }
 
-export interface IStormGlassData {
+export interface IStormGlassResponse {
   hours: ITempInfo[];
 }
 
@@ -39,7 +39,7 @@ export interface IOpenWeather {
 }
 
 export interface IStormGlass {
-  [key: string]: IWeatherPerDay[];
+  [key: string]: ITempInfo[];
 }
 
 export interface WeatherState {
@@ -47,4 +47,14 @@ export interface WeatherState {
   openWeather: IOpenWeather;
   stormGlass: IStormGlass;
   expiresDate: string;
+}
+
+export interface ITask {
+  date: string;
+  time: string;
+  title: string; 
+}
+
+export interface ITaskstate {
+  tasks: ITask[];
 }

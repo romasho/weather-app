@@ -3,7 +3,7 @@ import { styled } from "@mui/material";
 const ColumnBox = styled("div")(({ theme }) => ({
   maxWidth: "100vw",
   height: "100vh",
-  padding: "4%",
+  padding: "3% 4%",
   backgroundColor: `${theme.palette.background.default}`,
   background: "center/cover",
   backgroundBlendMode: "multiply",
