@@ -11,7 +11,7 @@ const stormGlassApi = createApi({
     prepareHeaders: (headers) => {
       headers.set(
         'Authorization',
-        '809ddfba-d628-11ec-88f0-0242ac130002-809de028-d628-11ec-88f0-0242ac130002',
+        '809ddfba-d628-11ec-88f0-0242ac130002-809de028-d628-11ec-88f0-0242ac130002'
       );
       headers.set('Cache-Control', 'max-age=6000');
       return headers;
