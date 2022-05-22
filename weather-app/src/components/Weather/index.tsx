@@ -1,28 +1,32 @@
-import { Typography } from "@mui/material";
+import { CircularProgress } from "@mui/material";
 import { useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "../../hooks/redux";
 import { Section } from "../../pages/Main/Container.styled";
 import { useGetLocationQuery } from "../../services";
 import {
-  fetchImage,
   fetchOpenWeather,
   fetchStormGlass,
-} from "../../store/reducers/weatherSlice";
-import { theme } from "../../theme";
+  fetchImage,
+} from "../../store/reducers/weatherSlice/asyncAction";
 import { openWeatherUrl } from "../../utils";
 import Day from "../Day";
+import { Message } from "./component.styled";
 
 function Weather() {
   const dispatch = useAppDispatch();
   const { city, isfirstSource } = useAppSelector((state) => state.citySlice);
-  const { openWeather, stormGlass } =
+  const { openWeather, stormGlass, isLoading, errorOpen, errorStorm } =
     useAppSelector((state) => state.weatherSlice);
 
-  const { data: location } = useGetLocationQuery(
+  const {
+    data: location,
+    isLoading: isLoadingGeo,
+    isSuccess,
+  } = useGetLocationQuery(
     { city: city },
     {
       skip:
-        (isfirstSource
+        (!isfirstSource
           ? openWeather.hasOwnProperty(city.toUpperCase())
           : stormGlass.hasOwnProperty(city.toUpperCase())) && !!city,
     }
@@ -34,7 +38,7 @@ function Weather() {
     if (lat && lon) {
       dispatch(fetchOpenWeather({ src: openWeatherUrl(lat, lon), city }));
     }
-    if (!isfirstSource) {
+    if (isfirstSource) {
       dispatch(fetchStormGlass({ lat, lng: lon, city }));
     }
   }, [lat, lon]);
@@ -49,28 +53,35 @@ function Weather() {
     <Section
       sx={{
         background: "rgba(35, 41, 70, 0.6)",
+        minHeight: "30vh",
+        flexWrap: { sm: "wrap" },
+        p: { xs: "1rem" },
+        flexDirection: { xs: "column", sm: "row" },
       }}
     >
-      {!openWeather[city.toUpperCase()] && (
-        <Typography
-          sx={{ p: "10px 10px", fontWeight: "bold", fontSize: "2.5rem" }}
-          color={theme.palette.text.primary}
-        >
-          Not correct request
-        </Typography>
+      {(isLoading || isLoadingGeo) &&
+        lat &&
+        !openWeather[city.toUpperCase()] && <CircularProgress />}
+      {(!isfirstSource
+        ? errorOpen && !openWeather[city.toUpperCase()]
+        : errorStorm && !stormGlass[city.toUpperCase()]) && (
+        <Message>Sorry, something went wrong. Try another source.</Message>
       )}
-      {isfirstSource ? openWeather[city.toUpperCase()] &&
-        openWeather[city.toUpperCase()]
-          .slice(0, 7)
-          .map((day, index) => (
-            <Day
-              day={day.dt * 1000}
-              imgCode={day.weather[0].icon}
-              temp={day.temp.day}
-              key={day.dt}
-              index={index}
-            />
-          )) : stormGlass[city.toUpperCase()] &&
+      {isSuccess && !lat && <Message>Invalid city name</Message>}
+      {!isfirstSource
+        ? openWeather[city.toUpperCase()] &&
+          openWeather[city.toUpperCase()]
+            .slice(0, 7)
+            .map((day, index) => (
+              <Day
+                day={day.dt * 1000}
+                imgCode={day.weather[0].icon}
+                temp={day.temp.day}
+                key={day.dt}
+                index={index}
+              />
+            ))
+        : stormGlass[city.toUpperCase()] &&
           stormGlass[city.toUpperCase()]
             .slice(0, 7)
             .map((day, index) => (

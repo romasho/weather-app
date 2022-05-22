@@ -2,8 +2,7 @@ import { styled } from "@mui/material";
 
 const ColumnBox = styled("div")(({ theme }) => ({
   maxWidth: "100vw",
-  height: "100vh",
-  padding: "3% 4%",
+  padding: "5vh 3%",
   backgroundColor: `${theme.palette.background.default}`,
   background: "center/cover",
   backgroundBlendMode: "multiply",
@@ -25,8 +24,9 @@ const Section = styled("section")(({ theme }) => ({
   display: "flex",
   justifyContent: "space-between",
   alignItems: "center",
-  padding: "1.5rem",
+  padding: "0 1.5rem",
   position: "relative",
+  minHeight: "30vh",
 }));
 
 export { ColumnBox, BackgroundBox, Section };

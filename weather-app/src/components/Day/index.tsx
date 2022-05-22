@@ -17,7 +17,8 @@ function Day({ day, imgCode, temp, index }: IDayProps) {
             display: "flex",
             flexDirection: "row",
             alignItems: "center",
-            mr: "3rem",
+            justifyContent: "center",
+            width: { md: "auto", sm: "100%" },
           }}
         >
           <img
@@ -41,7 +42,7 @@ function Day({ day, imgCode, temp, index }: IDayProps) {
         <Box
           sx={{
             display: "flex",
-            flexDirection: "column",
+            flexDirection: { xs: "row", sm: "column" },
             alignItems: "center",
           }}
         >

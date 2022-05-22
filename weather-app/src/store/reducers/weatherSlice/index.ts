@@ -1,4 +1,4 @@
-import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import {
   WeatherState,
   IWeatherPerDay,
@@ -6,15 +6,16 @@ import {
   IOpenWeatherResponse,
 } from "../../../models";
 import { getTomorrow } from "../../../utils";
+import { fetchImage, fetchOpenWeather, fetchStormGlass } from "./asyncAction";
 
 const state: WeatherState = {
   bgImage: "",
   openWeather: {},
   stormGlass: {},
   expiresDate: String(getTomorrow()),
-  isOpenWeatherLoaded: false,
-  isOpenWeatherError: false,
-  isLocationUnCorrect: false,
+  isLoading: false,
+  errorOpen: "",
+  errorStorm: "",
 };
 
 const initialState: WeatherState =
@@ -24,95 +25,65 @@ const initialState: WeatherState =
     ? JSON.parse(String(localStorage.getItem("WeatherState")))
     : state;
 
-export const fetchImage = createAsyncThunk(
-  "weather/fetchImage",
-  async (WeatherMain: string, thynkAPI) => {
-    const res = await fetch(
-      `https://api.unsplash.com/photos/random?orientation=landscape&query=${WeatherMain}&client_id=ki8jihwvAV1A8W4WBkNVcgK8NP-dUdxocfg_brGsuxE`
-    ).then((data) => data.json());
-    return res;
-  }
-);
-
-interface II {
-  src: string;
-  city: string;
-}
-
-interface III {
-  lat: string;
-  lng: string;
-  city: string;
-}
-
-export const fetchOpenWeather = createAsyncThunk(
-  "weather/fetchWeather",
-  async ({ src, city }: II, thynkAPI) => {
-    const res = await fetch(src).then((data) => data.json());
-    return { res, city };
-  }
-);
-
-export const fetchStormGlass = createAsyncThunk(
-  "weather/fetchWeatherStormGlass",
-  async ({ lat, lng, city }: III, thynkAPI) => {
-    const res = await fetch(
-      `https://api.stormglass.io/v2/weather/point?lat=${lat}&lng=${lng}&params=airTemperature`,
-      {
-        headers: {
-          Authorization:
-            "809ddfba-d628-11ec-88f0-0242ac130002-809de028-d628-11ec-88f0-0242ac130002",
-        },
-      }
-    ).then((data) => data.json());
-    return { res, city };
-  }
-);
 
 export const weatherSlice = createSlice({
   name: "weather",
   initialState,
-  reducers: {
-    errorRequest: (state) => {
-      state.isLocationUnCorrect = true;
-    },
-  },
+  reducers: {},
   extraReducers: {
     [fetchImage.fulfilled.type]: (state, action) => {
       state.bgImage = action.payload.urls.regular;
     },
     [fetchOpenWeather.pending.type]: (state) => {
-      state.isOpenWeatherLoaded = false;
+      state.isLoading = true;
+      state.errorOpen = "";
     },
     [fetchOpenWeather.fulfilled.type]: (
       state,
       action: PayloadAction<{ city: string; res: IOpenWeatherResponse }>
     ) => {
-      if (!state.openWeather.hasOwnProperty(action.payload.city.toUpperCase())) {
-        state.openWeather[action.payload.city.toUpperCase()] = action.payload.res.daily.map(
-          (day: IWeatherPerDay) => {
+      if (action.payload.res.errors) {
+        state.errorOpen = "Not correct request";
+        return;
+      }
+      if (
+        !state.openWeather.hasOwnProperty(action.payload.city.toUpperCase())
+      ) {
+        state.openWeather[action.payload.city.toUpperCase()] =
+          action.payload.res.daily.map((day: IWeatherPerDay) => {
             return { dt: day.dt, temp: day.temp, weather: day.weather };
-          }
-        );
+          });
         state.expiresDate = String(getTomorrow());
-        state.isOpenWeatherLoaded = true;
+        state.isLoading = false;
       }
       localStorage.setItem("WeatherState", JSON.stringify(state));
     },
-    [fetchOpenWeather.rejected.type]: (state) => {},
+    [fetchOpenWeather.rejected.type]: (state) => {
+      state.isLoading = true;
+    },
+    [fetchStormGlass.pending.type]: (state) => {
+      state.isLoading = true;
+      state.errorStorm = "";
+    },
     [fetchStormGlass.fulfilled.type]: (
       state,
       action: PayloadAction<{ city: string; res: IStormGlassResponse }>
     ) => {
+      if (action.payload.res.errors) {
+        state.errorStorm = "Not correct request";
+        return;
+      }
       if (!state.stormGlass.hasOwnProperty(action.payload.city.toUpperCase())) {
-        state.stormGlass[action.payload.city.toUpperCase()] = action.payload.res.hours.filter(
-          (hour, index) =>
-            index > 0 && (index - 12) % 24 === 0
-        );
+        state.stormGlass[action.payload.city.toUpperCase()] =
+          action.payload.res.hours.filter(
+            (hour, index) => index > 0 && (index - 12) % 24 === 0
+          );
         state.expiresDate = String(getTomorrow());
+        state.isLoading = false;
       }
       localStorage.setItem("WeatherState", JSON.stringify(state));
     },
+    [fetchStormGlass.rejected.type]: (state, action) => {},
   },
 });
 

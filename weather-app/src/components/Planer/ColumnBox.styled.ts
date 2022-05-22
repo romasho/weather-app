@@ -2,8 +2,10 @@ import { Box, styled } from "@mui/material";
 
 const CustomnBox = styled(Box)(({ theme }) => ({
   height: "100%",
-  padding: "1rem",
+  padding: "0 1rem",
   overflowY: "auto",
+  minHeight: "30vh",
+  maxHeight: "30vh",
   "&::-webkit-scrollbar": {
     width: "0.6rem",
   },

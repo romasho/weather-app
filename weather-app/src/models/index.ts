@@ -5,6 +5,7 @@ export interface ITempInfo {
 
 export interface IStormGlassResponse {
   hours: ITempInfo[];
+  errors?: {}
 }
 
 export interface ICoord {
@@ -32,6 +33,7 @@ export interface IOpenWeatherResponse {
   timezone: string;
   lat: number;
   lon: number;
+  errors?: {}
 }
 
 export interface IOpenWeather {
@@ -47,9 +49,9 @@ export interface WeatherState {
   openWeather: IOpenWeather;
   stormGlass: IStormGlass;
   expiresDate: string;
-  isOpenWeatherLoaded: boolean;
-  isOpenWeatherError: boolean;
-  isLocationUnCorrect: boolean;
+  isLoading: boolean;
+  errorOpen: string;
+  errorStorm: string;
 }
 
 export interface ITask {

@@ -4,7 +4,13 @@ import { ColumnBox, BackgroundBox, Section } from "./Container.styled";
 import { fetchCity } from "../../store/reducers/citySlice";
 import { usePosition } from "../../hooks/usePosition";
 import { Geocoding } from "../../utils";
-import { Clock, EditableInput, SourceSettings, Planer, Weather } from "../../components";
+import {
+  Clock,
+  EditableInput,
+  SourceSettings,
+  Planer,
+  Weather,
+} from "../../components";
 import useProgressiveImage from "../../hooks/lazyLoad";
 
 function Main() {
@@ -36,7 +42,7 @@ function Main() {
           backgroundImage: `url(${loaded || "./шфидщ.png"})`,
         }}
       >
-        <Section>
+        <Section sx={{ flexDirection: { xs: "column", md: "row" }, alignItems: { xs: "flex-start", md: "center" } }}>
           <Clock />
           <EditableInput />
           <SourceSettings />

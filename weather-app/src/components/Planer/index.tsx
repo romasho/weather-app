@@ -9,10 +9,7 @@ function Planer() {
   const { tasks } = useAppSelector((state) => state.tasksSlice);
 
   return (
-    <CustomnBox
-      component="section"
-      sx={{ height: "100%", padding: "1rem", overflowY: "auto" }}
-    >
+    <CustomnBox component="section">
       <Typography
         sx={{ p: "10px 10px", fontWeight: "bold", fontSize: "2rem" }}
         color={theme.palette.text.primary}
@@ -23,7 +20,12 @@ function Planer() {
       {tasks
         .filter((task) => task.date === getToday())
         .map((task, index) => (
-          <Task date={task.date} time={task.time} title={task.title} key={task.date + index} />
+          <Task
+            date={task.date}
+            time={task.time}
+            title={task.title}
+            key={task.date + index}
+          />
         ))}
       <AddTask />
     </CustomnBox>

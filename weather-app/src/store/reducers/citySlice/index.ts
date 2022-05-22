@@ -5,7 +5,7 @@ export interface CityState {
   isfirstSource: boolean;
 }
 
-//  "OpenWeather" - true | "StormGlass" - false
+//  "OpenWeather" - false | "StormGlass" - true
 
 const state: CityState = {
   city: "",

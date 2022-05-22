@@ -14,12 +14,20 @@ function Clock() {
   function tick() {
     setDate(new Date());
   }
+  const time = date.toLocaleString("en-US", {
+    hour: "2-digit",
+    minute: "2-digit",
+  });
 
   return (
     <div>
       <Typography component="h2" color="white" sx={{ fontSize: "4rem" }}>
-        {date.toLocaleString("en-US", { hour: "2-digit", minute: "2-digit" })}
+        {time.slice(0, -2)}
+        <Typography component="span" color="white" sx={{ fontSize: "2rem" }}>
+          {time.slice(-2)}
+        </Typography>
       </Typography>
+
       <Typography component="h2" color="white" sx={{ fontSize: "2rem" }}>
         {date.toLocaleString("en-US", {
           weekday: "long",
