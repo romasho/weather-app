@@ -47,6 +47,9 @@ export interface WeatherState {
   openWeather: IOpenWeather;
   stormGlass: IStormGlass;
   expiresDate: string;
+  isOpenWeatherLoaded: boolean;
+  isOpenWeatherError: boolean;
+  isLocationUnCorrect: boolean;
 }
 
 export interface ITask {

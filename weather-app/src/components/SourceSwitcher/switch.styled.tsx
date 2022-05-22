@@ -1,7 +1,7 @@
 import { styled } from '@mui/material/styles';
 import Switch, { SwitchProps } from '@mui/material/Switch';
 
-const LangSwitch = styled((props: SwitchProps) => (
+const SourceSwitch = styled((props: SwitchProps) => (
   <Switch focusVisibleClassName=".Mui-focusVisible" disableRipple {...props} />
 ))(({ theme }) => ({
   width: 28,
@@ -50,4 +50,4 @@ const LangSwitch = styled((props: SwitchProps) => (
   },
 }));
 
-export default LangSwitch;
+export default SourceSwitch;
