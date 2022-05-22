@@ -1,9 +1,9 @@
-import { Typography } from "@mui/material";
-import { AddTask, Task } from "..";
-import { useAppSelector } from "../../hooks/redux";
-import { theme } from "../../theme";
-import { getToday } from "../../utils";
-import CustomnBox from "./ColumnBox.styled";
+import { Typography } from '@mui/material';
+import { AddTask, Task } from '..';
+import { useAppSelector } from '../../hooks/redux';
+import theme from '../../theme';
+import { getToday } from '../../utils';
+import CustomnBox from './ColumnBox.styled';
 
 function Planer() {
   const { tasks } = useAppSelector((state) => state.tasksSlice);
@@ -11,7 +11,7 @@ function Planer() {
   return (
     <CustomnBox component="section">
       <Typography
-        sx={{ p: "10px 10px", fontWeight: "bold", fontSize: "2rem" }}
+        sx={{ p: '10px 10px', fontWeight: 'bold', fontSize: '2rem' }}
         color={theme.palette.text.primary}
       >
         Tasks for today
@@ -24,7 +24,7 @@ function Planer() {
             date={task.date}
             time={task.time}
             title={task.title}
-            key={task.date + index}
+            key={task.date + String(index)}
           />
         ))}
       <AddTask />

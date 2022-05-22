@@ -1,7 +1,7 @@
-import React from "react";
-import { Button, Menu, MenuItem } from "@mui/material";
-import { Settings } from "@mui/icons-material";
-import { SourceSwitcher } from "..";
+import React from 'react';
+import { Button, Menu } from '@mui/material';
+import { Settings } from '@mui/icons-material';
+import { SourceSwitcher } from '..';
 
 function SourceSettings() {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
@@ -14,12 +14,12 @@ function SourceSettings() {
   };
 
   return (
-    <div style={{ position: "absolute", top: "0.5rem", right: "0.5rem" }}>
+    <div style={{ position: 'absolute', top: '0.5rem', right: '0.5rem' }}>
       <Button
         id="basic-button"
-        aria-controls={open ? "basic-menu" : undefined}
+        aria-controls={open ? 'basic-menu' : undefined}
         aria-haspopup="true"
-        aria-expanded={open ? "true" : undefined}
+        aria-expanded={open ? 'true' : undefined}
         onClick={handleClick}
         startIcon={<Settings />}
       >
@@ -31,7 +31,7 @@ function SourceSettings() {
         open={open}
         onClose={handleClose}
         MenuListProps={{
-          "aria-labelledby": "basic-button",
+          'aria-labelledby': 'basic-button',
         }}
       >
         <SourceSwitcher />

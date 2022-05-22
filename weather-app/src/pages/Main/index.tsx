@@ -1,17 +1,11 @@
-import React, { useEffect } from "react";
-import { useAppDispatch, useAppSelector } from "../../hooks/redux";
-import { ColumnBox, BackgroundBox, Section } from "./Container.styled";
-import { fetchCity } from "../../store/reducers/citySlice";
-import { usePosition } from "../../hooks/usePosition";
-import { Geocoding } from "../../utils";
-import {
-  Clock,
-  EditableInput,
-  SourceSettings,
-  Planer,
-  Weather,
-} from "../../components";
-import useProgressiveImage from "../../hooks/lazyLoad";
+import React, { useEffect } from 'react';
+import { useAppDispatch, useAppSelector } from '../../hooks/redux';
+import { ColumnBox, BackgroundBox, Section } from './Container.styled';
+import { fetchCity } from '../../store/reducers/citySlice';
+import usePosition from '../../hooks/usePosition';
+import { Geocoding } from '../../utils';
+import { Clock, EditableInput, SourceSettings, Planer, Weather } from '../../components';
+import useProgressiveImage from '../../hooks/lazyLoad';
 
 function Main() {
   const dispatch = useAppDispatch();
@@ -34,15 +28,20 @@ function Main() {
   return (
     <ColumnBox
       style={{
-        backgroundImage: `url(${loaded || "./шфидщ.png"})`,
+        backgroundImage: `url(${loaded || './шфидщ.png'})`,
       }}
     >
       <BackgroundBox
         style={{
-          backgroundImage: `url(${loaded || "./шфидщ.png"})`,
+          backgroundImage: `url(${loaded || './шфидщ.png'})`,
         }}
       >
-        <Section sx={{ flexDirection: { xs: "column", md: "row" }, alignItems: { xs: "flex-start", md: "center" } }}>
+        <Section
+          sx={{
+            flexDirection: { xs: 'column', md: 'row' },
+            alignItems: { xs: 'flex-start', md: 'center' },
+          }}
+        >
           <Clock />
           <EditableInput />
           <SourceSettings />

@@ -5,7 +5,7 @@ export interface ITempInfo {
 
 export interface IStormGlassResponse {
   hours: ITempInfo[];
-  errors?: {}
+  errors?: Record<string, unknown>;
 }
 
 export interface ICoord {
@@ -24,7 +24,7 @@ export interface IWeatherPerDay {
       id: number;
       icon: string;
       main: string;
-    }
+    },
   ];
 }
 
@@ -33,7 +33,7 @@ export interface IOpenWeatherResponse {
   timezone: string;
   lat: number;
   lon: number;
-  errors?: {}
+  errors?: Record<string, unknown>;
 }
 
 export interface IOpenWeather {
@@ -57,7 +57,7 @@ export interface WeatherState {
 export interface ITask {
   date: string;
   time: string;
-  title: string; 
+  title: string;
 }
 
 export interface ITaskstate {

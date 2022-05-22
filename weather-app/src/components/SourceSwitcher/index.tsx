@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from "react";
-import { Stack, Typography } from "@mui/material";
-import SourceSwitch from "./switch.styled";
-import { useAppDispatch, useAppSelector } from "../../hooks/redux";
-import { citySlice } from "../../store/reducers/citySlice";
+import React, { useState, useEffect } from 'react';
+import { Stack, Typography } from '@mui/material';
+import SourceSwitch from './switch.styled';
+import { useAppDispatch, useAppSelector } from '../../hooks/redux';
+import { citySlice } from '../../store/reducers/citySlice';
 
 function SourceSwitcher() {
   const dispatch = useAppDispatch();
@@ -18,19 +18,10 @@ function SourceSwitcher() {
   }, [checked]);
 
   return (
-    <Stack
-      direction="row"
-      spacing={0.5}
-      alignItems="center"
-      sx={{ p: "0.5rem" }}
-    >
-      <Typography sx={{ fontWeight: "bold", fontSize: "14px" }}>
-        OpenWeather
-      </Typography>
+    <Stack direction="row" spacing={0.5} alignItems="center" sx={{ p: '0.5rem' }}>
+      <Typography sx={{ fontWeight: 'bold', fontSize: '14px' }}>OpenWeather</Typography>
       <SourceSwitch checked={checked} onChange={handleChange} />
-      <Typography sx={{ fontWeight: "bold", fontSize: "14px" }}>
-        Storm Glass
-      </Typography>
+      <Typography sx={{ fontWeight: 'bold', fontSize: '14px' }}>Storm Glass</Typography>
     </Stack>
   );
 }
