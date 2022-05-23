@@ -39,7 +39,7 @@ function Weather() {
     if (lat && lon) {
       dispatch(fetchOpenWeather({ src: openWeatherUrl(lat, lon), city }));
     }
-    if (isfirstSource) {
+    if (isfirstSource && lat && lon) {
       dispatch(fetchStormGlass({ lat, lng: lon, city }));
     }
   }, [lat, lon]);
