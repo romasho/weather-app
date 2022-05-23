@@ -1,8 +1,8 @@
-import { Box, Button, TextField } from "@mui/material";
-import { useForm } from "react-hook-form";
-import { useAppDispatch } from "../../hooks/redux";
-import { tasksSlice } from "../../store/reducers/taskSlice";
-import { CustomInput, ErrorText } from "./Inputs.styled";
+import { Box, Button, TextField } from '@mui/material';
+import { useForm } from 'react-hook-form';
+import { useAppDispatch } from '../../hooks/redux';
+import { tasksSlice } from '../../store/reducers/taskSlice';
+import { CustomInput, ErrorText } from './Inputs.styled';
 
 type IFormData = {
   date: string;
@@ -17,9 +17,9 @@ export default function Form({ onCancel }: { onCancel: () => void }) {
     reset,
     formState: { errors },
   } = useForm<IFormData>({
-    mode: "onSubmit",
-    reValidateMode: "onChange",
-    criteriaMode: "all",
+    mode: 'onSubmit',
+    reValidateMode: 'onChange',
+    criteriaMode: 'all',
   });
 
   const dispatch = useAppDispatch();
@@ -36,13 +36,13 @@ export default function Form({ onCancel }: { onCancel: () => void }) {
       component="form"
       onSubmit={handleSubmit(onSubmit)}
       sx={{
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "flex-start",
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'flex-start',
       }}
     >
       <TextField
-        {...register("title", { required: "Task is required" })}
+        {...register('title', { required: 'Task is required' })}
         type="text"
         fullWidth
         error={!!errors.title}
@@ -51,30 +51,21 @@ export default function Form({ onCancel }: { onCancel: () => void }) {
       />
       <CustomInput
         type="date"
-        {...register("date", {
-          required: "Date is required",
-          min: new Date().toISOString().split("T")[0],
+        {...register('date', {
+          required: 'Date is required',
+          min: new Date().toISOString().split('T')[0],
         })}
       />
-      {errors.date?.type === "required" && (
-        <ErrorText>Date is required</ErrorText>
-      )}
-      {errors.date?.type === "min" && (
-        <ErrorText>The minimum date is today</ErrorText>
-      )}
-      <CustomInput
-        type="time"
-        {...register("time", { required: "Time is required" })}
-      />
-      {errors.time?.type === "required" && (
-        <ErrorText>Time is required</ErrorText>
-      )}
+      {errors.date?.type === 'required' && <ErrorText>Date is required</ErrorText>}
+      {errors.date?.type === 'min' && <ErrorText>The minimum date is today</ErrorText>}
+      <CustomInput type="time" {...register('time', { required: 'Time is required' })} />
+      {errors.time?.type === 'required' && <ErrorText>Time is required</ErrorText>}
       <Button
         variant="contained"
         type="submit"
-        disabled={Object.keys(errors).length === 0 ? false : true}
+        disabled={Object.keys(errors).length !== 0}
         className="submit"
-        sx={{ m: "1rem auto 0" }}
+        sx={{ m: '1rem auto 0' }}
       >
         Отправить
       </Button>

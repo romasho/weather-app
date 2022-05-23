@@ -1,23 +1,23 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect } from 'react';
 
-export const usePosition = () => {
+const usePosition = () => {
   const [position, setPosition] = useState<GeolocationCoordinates>();
   const [error, setError] = useState<GeolocationCoordinates | string>('');
 
-  const onChange = ({ coords }: GeolocationPosition ) => {
-      const { latitude, longitude } = coords;
+  const onChange = ({ coords }: GeolocationPosition) => {
+    const { latitude, longitude } = coords;
     setPosition({ ...coords, latitude, longitude });
   };
 
-  const onError = (error: GeolocationPositionError ) => {
-    setError(error.message);
+  const onError = (errorMes: GeolocationPositionError) => {
+    setError(errorMes.message);
   };
 
   useEffect(() => {
     const geo = navigator.geolocation;
 
     if (!geo) {
-      setError("Геолокация не поддерживается браузером");
+      setError('Геолокация не поддерживается браузером');
       return;
     }
 
@@ -28,3 +28,5 @@ export const usePosition = () => {
 
   return { ...position, error };
 };
+
+export default usePosition;

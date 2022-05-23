@@ -1,29 +1,30 @@
-import { CircularProgress } from "@mui/material";
-import { useEffect } from "react";
-import { useAppDispatch, useAppSelector } from "../../hooks/redux";
-import { Section } from "../../pages/Main/Container.styled";
-import { useGetLocationQuery } from "../../services";
+import { CircularProgress } from '@mui/material';
+import { useEffect } from 'react';
+import { useAppDispatch, useAppSelector } from '../../hooks/redux';
+import { Section } from '../../pages/Main/Container.styled';
+import { useGetLocationQuery } from '../../services';
 import {
   fetchOpenWeather,
   fetchStormGlass,
   fetchImage,
-} from "../../store/reducers/weatherSlice/asyncAction";
-import { openWeatherUrl } from "../../utils";
-import Day from "../Day";
-import { Message } from "./component.styled";
+} from '../../store/reducers/weatherSlice/asyncAction';
+import { openWeatherUrl } from '../../utils';
+import Day from '../Day';
+import Message from './component.styled';
 
 function Weather() {
   const dispatch = useAppDispatch();
   const { city, isfirstSource } = useAppSelector((state) => state.citySlice);
-  const { openWeather, stormGlass, isLoading, errorOpen, errorStorm } =
-    useAppSelector((state) => state.weatherSlice);
+  const { openWeather, stormGlass, isLoading, errorOpen, errorStorm } = useAppSelector(
+    (state) => state.weatherSlice
+  );
 
   const {
     data: location,
     isLoading: isLoadingGeo,
     isSuccess,
   } = useGetLocationQuery(
-    { city: city },
+    { city },
     {
       skip:
         (!isfirstSource
@@ -32,7 +33,7 @@ function Weather() {
     }
   );
 
-  const { lat, lon } = location?.length ? location[0] : { lat: "", lon: "" };
+  const { lat, lon } = location?.length ? location[0] : { lat: '', lon: '' };
 
   useEffect(() => {
     if (lat && lon) {
@@ -52,16 +53,16 @@ function Weather() {
   return (
     <Section
       sx={{
-        background: "rgba(35, 41, 70, 0.6)",
-        minHeight: "30vh",
-        flexWrap: { sm: "wrap" },
-        p: { xs: "1rem" },
-        flexDirection: { xs: "column", sm: "row" },
+        background: 'rgba(35, 41, 70, 0.6)',
+        minHeight: '30vh',
+        flexWrap: { sm: 'wrap' },
+        p: { xs: '1rem' },
+        flexDirection: { xs: 'column', sm: 'row' },
       }}
     >
-      {(isLoading || isLoadingGeo) &&
-        lat &&
-        !openWeather[city.toUpperCase()] && <CircularProgress />}
+      {(isLoading || isLoadingGeo) && lat && !openWeather[city.toUpperCase()] && (
+        <CircularProgress />
+      )}
       {(!isfirstSource
         ? errorOpen && !openWeather[city.toUpperCase()]
         : errorStorm && !stormGlass[city.toUpperCase()]) && (

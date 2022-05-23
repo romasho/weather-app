@@ -1,4 +1,4 @@
-import { createAsyncThunk } from "@reduxjs/toolkit";
+import { createAsyncThunk } from '@reduxjs/toolkit';
 
 interface II {
   src: string;
@@ -12,19 +12,19 @@ interface III {
 }
 
 export const fetchOpenWeather = createAsyncThunk(
-  "weather/fetchWeather",
+  'weather/fetchWeather',
   async ({ src, city }: II, thynkAPI) => {
     try {
       const res = await fetch(src).then((data) => data.json());
       return { res, city };
     } catch (e) {
-      return thynkAPI.rejectWithValue("Error");
+      return thynkAPI.rejectWithValue('Error');
     }
   }
 );
 
 export const fetchStormGlass = createAsyncThunk(
-  "weather/fetchWeatherStormGlass",
+  'weather/fetchWeatherStormGlass',
   async ({ lat, lng, city }: III, thynkAPI) => {
     try {
       const res = await fetch(
@@ -32,19 +32,19 @@ export const fetchStormGlass = createAsyncThunk(
         {
           headers: {
             Authorization:
-              "809ddfba-d628-11ec-88f0-0242ac130002-809de028-d628-11ec-88f0-0242ac130002",
+              '809ddfba-d628-11ec-88f0-0242ac130002-809de028-d628-11ec-88f0-0242ac130002',
           },
         }
       ).then((data) => data.json());
       return { res, city };
     } catch (e) {
-      return thynkAPI.rejectWithValue("Error");
+      return thynkAPI.rejectWithValue('Error');
     }
   }
 );
 
 export const fetchImage = createAsyncThunk(
-  "weather/fetchImage",
+  'weather/fetchImage',
   async (WeatherMain: string, thynkAPI) => {
     try {
       const res = await fetch(
@@ -52,7 +52,7 @@ export const fetchImage = createAsyncThunk(
       ).then((data) => data.json());
       return res;
     } catch (e) {
-      return thynkAPI.rejectWithValue("Error");
+      return thynkAPI.rejectWithValue('Error');
     }
   }
 );

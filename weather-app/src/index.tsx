@@ -1,13 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
+import { ThemeProvider } from '@emotion/react';
+import { Provider } from 'react-redux';
+import { BrowserRouter } from 'react-router-dom';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import { ThemeProvider } from '@emotion/react';
-import { theme } from './theme';
-import { Provider } from 'react-redux';
+import theme from './theme';
 import { setupStore } from './store';
-import { BrowserRouter } from 'react-router-dom';
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
 const store = setupStore();
