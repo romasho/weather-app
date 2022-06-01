@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Stack, Typography } from '@mui/material';
 import CustomSwitch from './switch.styled';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux';
@@ -10,11 +10,8 @@ function SourceSwitcher() {
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setChecked(e.target.checked);
-  };
-
-  useEffect(() => {
     dispatch(citySlice.actions.changeSource());
-  }, [checked]);
+  };
 
   return (
     <Stack direction="row" spacing={0.5} alignItems="center" sx={{ p: '0.5rem' }}>

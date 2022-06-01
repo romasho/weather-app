@@ -61,7 +61,7 @@ function Weather() {
       }}
     >
       {(isLoading || isLoadingGeo) && lat && !openWeather[city.toUpperCase()] && (
-        <CircularProgress />
+        <CircularProgress size={60} sx={{ m: '0 auto' }} />
       )}
       {(!isfirstSource
         ? errorOpen && !openWeather[city.toUpperCase()]
