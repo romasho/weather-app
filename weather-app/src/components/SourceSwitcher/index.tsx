@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
-import { Stack, Typography } from '@mui/material';
-import CustomSwitch from './switch.styled';
+import React, { useState, useEffect } from 'react';
+import { Input, Label, Switch } from './switch.styled';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux';
 import { citySlice } from '../../store/reducers/citySlice';
+import { Typography } from '../Clock/components.styled';
 
 function SourceSwitcher() {
   const dispatch = useAppDispatch();
@@ -10,15 +10,33 @@ function SourceSwitcher() {
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setChecked(e.target.checked);
-    dispatch(citySlice.actions.changeSource());
   };
 
+  useEffect(() => {
+    dispatch(citySlice.actions.changeSource());
+  }, [checked]);
+
   return (
-    <Stack direction="row" spacing={0.5} alignItems="center" sx={{ p: '0.5rem' }}>
-      <Typography sx={{ fontWeight: 'bold', fontSize: '14px' }}>OpenWeather</Typography>
-      <CustomSwitch checked={checked} onChange={handleChange} />
-      <Typography sx={{ fontWeight: 'bold', fontSize: '14px' }}>Storm Glass</Typography>
-    </Stack>
+    <div
+      style={{
+        position: 'absolute',
+        top: '0.5rem',
+        right: '0.5rem',
+        display: 'flex',
+        columnGap: '1rem',
+      }}
+    >
+      <Typography fontSize="14px" color="white" style={{ fontWeight: 'bold' }}>
+        OpenWeather
+      </Typography>
+      <Label>
+        <Input checked={checked} type="checkbox" onChange={handleChange} />
+        <Switch />
+      </Label>
+      <Typography color="white" fontSize="14px" style={{ fontWeight: 'bold' }}>
+        Storm Glass
+      </Typography>
+    </div>
   );
 }
 

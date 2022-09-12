@@ -1,7 +1,6 @@
 import { CircularProgress } from '@mui/material';
 import { useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux';
-import { Section } from '../../pages/Main/Container.styled';
 import { useGetLocationQuery } from '../../services';
 import {
   fetchOpenWeather,
@@ -10,7 +9,7 @@ import {
 } from '../../store/reducers/weatherSlice/asyncAction';
 import { openWeatherUrl } from '../../utils';
 import Day from '../Day';
-import Message from './component.styled';
+import { Message, SectionWeather } from './component.styled';
 
 function Weather() {
   const dispatch = useAppDispatch();
@@ -51,17 +50,9 @@ function Weather() {
   }, [city]);
 
   return (
-    <Section
-      sx={{
-        background: 'rgba(35, 41, 70, 0.6)',
-        minHeight: '30vh',
-        flexWrap: { sm: 'wrap' },
-        p: { xs: '1rem' },
-        flexDirection: { xs: 'column', sm: 'row' },
-      }}
-    >
+    <SectionWeather>
       {(isLoading || isLoadingGeo) && lat && !openWeather[city.toUpperCase()] && (
-        <CircularProgress size={60} sx={{ m: '0 auto' }} />
+        <CircularProgress />
       )}
       {(!isfirstSource
         ? errorOpen && !openWeather[city.toUpperCase()]
@@ -94,7 +85,7 @@ function Weather() {
                 index={index}
               />
             ))}
-    </Section>
+    </SectionWeather>
   );
 }
 

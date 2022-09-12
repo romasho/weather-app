@@ -4,7 +4,7 @@ import { ColumnBox, BackgroundBox, Section } from './Container.styled';
 import { fetchCity } from '../../store/reducers/citySlice';
 import usePosition from '../../hooks/usePosition';
 import { Geocoding } from '../../utils';
-import { Clock, EditableInput, SourceSettings, Planer, Weather } from '../../components';
+import { Clock, EditableInput, Planer, SourceSwitcher, Weather } from '../../components';
 import useProgressiveImage from '../../hooks/lazyLoad';
 
 function Main() {
@@ -44,7 +44,7 @@ function Main() {
         >
           <Clock />
           <EditableInput />
-          <SourceSettings />
+          <SourceSwitcher />
         </Section>
         <Planer />
         <Weather />

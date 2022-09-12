@@ -1,7 +1,6 @@
-import { Button } from '@mui/material';
-import AddIcon from '@mui/icons-material/Add';
 import { useCallback, useState } from 'react';
 import { Modal, Form } from '..';
+import { Button, Span } from './component.styled';
 
 function AddTask() {
   const [isOpened, setIsOpened] = useState(false);
@@ -12,8 +11,8 @@ function AddTask() {
 
   return (
     <>
-      <Button startIcon={<AddIcon />} onClick={toggleIsOpened}>
-        Add task
+      <Button onClick={toggleIsOpened}>
+        <Span>+ </Span> Add task
       </Button>
       <Modal isOpened={isOpened} onCancel={toggleIsOpened}>
         <Form onCancel={toggleIsOpened} />

@@ -1,7 +1,6 @@
 export { default as Clock } from './Clock';
 export { default as EditableInput } from './EditableInput';
 export { default as Day } from './Day';
-export { default as SourceSettings } from './Settings';
 export { default as SourceSwitcher } from './SourceSwitcher';
 export { default as Portal } from './Portal';
 export { default as Modal } from './Modal';

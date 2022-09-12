@@ -1,10 +1,24 @@
-import { styled, Typography } from '@mui/material';
+import styled from 'styled-components';
+import { Section } from '../../pages/Main/Container.styled';
 
-const Message = styled(Typography)(({ theme }) => ({
-  p: '10px 10px',
-  fontWeight: 'bold',
-  fontSize: '2.5rem',
-  color: `${theme.palette.text.primary}`,
-}));
+export const SectionWeather = styled(Section)`
+  background: rgba(35, 41, 70, 0.6);
+  min-height: 30vh;
 
-export default Message;
+  @media (max-width: 878px) {
+    flex-wrap: wrap;
+    flex-direction: column;
+    padding: 1rem;
+  }
+
+  @media (min-width: 1024px) {
+    flex-direction: row;
+  }
+`;
+
+export const Message = styled.h2`
+  padding: 10px 10px;
+  font-weight: bold;
+  font-size: 2.5rem;
+  color: ${(props) => props.theme.palette.text.primary};
+`;

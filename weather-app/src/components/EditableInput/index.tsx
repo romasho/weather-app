@@ -1,8 +1,9 @@
-import { TextField, Box, Typography } from '@mui/material';
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux';
 import { citySlice } from '../../store/reducers/citySlice';
+import { Typography } from '../Clock/components.styled';
+import { Input } from './components.styled';
 
 interface IFormData {
   name: string;
@@ -26,31 +27,15 @@ function EditableInput() {
   return (
     <>
       {isEditing ? (
-        <Box component="form" onSubmit={handleSubmit(onSubmit)} onBlur={handleSubmit(onSubmit)}>
-          <TextField
-            {...register('name')}
-            type="text"
-            variant="outlined"
-            defaultValue={city}
-            size="small"
-            inputProps={{
-              style: {
-                padding: '10px 10px',
-                fontSize: '2.5rem',
-                fontWeight: 'bold',
-                direction: 'rtl',
-                color: 'white',
-              },
-            }}
-            autoFocus
-          />
-        </Box>
+        <form onSubmit={handleSubmit(onSubmit)} onBlur={handleSubmit(onSubmit)}>
+          <Input {...register('name')} type="text" defaultValue={city} autoFocus />
+        </form>
       ) : (
         <Typography
           onClick={() => setIsEditing(true)}
-          component="h1"
-          sx={{ p: '10px 10px', fontWeight: 'bold', fontSize: '2.5rem' }}
+          fontSize={'2.5rem'}
           color="white"
+          style={{ fontWeight: 'bold' }}
         >
           {city}
         </Typography>

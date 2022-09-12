@@ -1,7 +1,7 @@
-import { Box, Button, TextField } from '@mui/material';
 import { useForm } from 'react-hook-form';
 import { useAppDispatch } from '../../hooks/redux';
 import { tasksSlice } from '../../store/reducers/taskSlice';
+import { Button } from '../AddTask/component.styled';
 import { CustomInput, ErrorText } from './Inputs.styled';
 
 type IFormData = {
@@ -31,23 +31,9 @@ export default function Form({ onCancel }: { onCancel: () => void }) {
   }
 
   return (
-    <Box
-      component="form"
-      onSubmit={handleSubmit(onSubmit)}
-      sx={{
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'flex-start',
-      }}
-    >
-      <TextField
-        {...register('title', { required: 'Task is required' })}
-        type="text"
-        fullWidth
-        error={!!errors.title}
-        helperText={errors.title?.message}
-        size="small"
-      />
+    <form onSubmit={handleSubmit(onSubmit)}>
+      <CustomInput {...register('title', { required: 'Title is required' })} type="text" />
+      {errors.title?.type === 'required' && <ErrorText>Title is required</ErrorText>}
       <CustomInput
         type="date"
         {...register('date', {
@@ -59,9 +45,9 @@ export default function Form({ onCancel }: { onCancel: () => void }) {
       {errors.date?.type === 'min' && <ErrorText>The minimum date is today</ErrorText>}
       <CustomInput type="time" {...register('time', { required: 'Time is required' })} />
       {errors.time?.type === 'required' && <ErrorText>Time is required</ErrorText>}
-      <Button variant="contained" type="submit" className="submit" sx={{ m: '1rem auto 0' }}>
-        Отправить
+      <Button type="submit" contained style={{ margin: '1rem auto 0' }}>
+        Create
       </Button>
-    </Box>
+    </form>
   );
 }

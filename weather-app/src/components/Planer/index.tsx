@@ -1,18 +1,20 @@
-import { Typography } from '@mui/material';
 import { AddTask, Task } from '..';
 import { useAppSelector } from '../../hooks/redux';
-import theme from '../../theme';
 import { getToday } from '../../utils';
-import CustomnBox from './ColumnBox.styled';
+import { Typography } from '../Clock/components.styled';
+
+import theme from '../../theme';
+import CustomBox from './ColumnBox.styled';
 
 function Planer() {
   const { tasks } = useAppSelector((state) => state.tasksSlice);
 
   return (
-    <CustomnBox component="section">
+    <CustomBox component="section">
       <Typography
-        sx={{ p: '10px 10px', fontWeight: 'bold', fontSize: '2rem' }}
+        style={{ padding: '10px 10px', fontWeight: 'bold' }}
         color={theme.palette.text.primary}
+        fontSize="2rem"
       >
         Tasks for today
       </Typography>
@@ -28,7 +30,7 @@ function Planer() {
           />
         ))}
       <AddTask />
-    </CustomnBox>
+    </CustomBox>
   );
 }
 

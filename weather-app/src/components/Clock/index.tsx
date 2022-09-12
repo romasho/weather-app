@@ -1,5 +1,5 @@
-import { Typography } from '@mui/material';
 import React, { useEffect, useState } from 'react';
+import { Typography, TypographySpan } from './components.styled';
 
 function Clock() {
   const [date, setDate] = useState(new Date());
@@ -22,14 +22,14 @@ function Clock() {
 
   return (
     <div>
-      <Typography component="h2" color="white" sx={{ fontSize: '4rem' }}>
+      <Typography color="white" fontSize={'4rem'}>
         {time.slice(0, -2)}
-        <Typography component="span" color="white" sx={{ fontSize: '2rem' }}>
+        <TypographySpan color="white" fontSize={'2rem'} inline>
           {time.slice(-2)}
-        </Typography>
+        </TypographySpan>
       </Typography>
 
-      <Typography component="h2" color="white" sx={{ fontSize: '2rem' }}>
+      <Typography color="white" fontSize={'2rem'}>
         {date.toLocaleString('en-US', {
           weekday: 'long',
           year: 'numeric',

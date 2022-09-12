@@ -1,6 +1,6 @@
 import { Box, styled } from '@mui/material';
 
-const CustomnBox = styled(Box)(({ theme }) => ({
+const CustomBox = styled(Box)(({ theme }) => ({
   height: '100%',
   padding: '0 1rem',
   overflowY: 'auto',
@@ -20,4 +20,4 @@ const CustomnBox = styled(Box)(({ theme }) => ({
   },
 }));
 
-export default CustomnBox;
+export default CustomBox;
