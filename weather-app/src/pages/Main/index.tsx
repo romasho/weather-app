@@ -1,11 +1,13 @@
 import React, { useEffect } from 'react';
-import { useAppDispatch, useAppSelector } from '../../hooks/redux';
+
+import { useAppDispatch, useAppSelector } from '@/hooks/redux';
+import { fetchCity } from '@/store/reducers/citySlice';
+import usePosition from '@/hooks/usePosition';
+import { Geocoding } from '@/utils';
+import { Clock, EditableInput, Planer, SourceSwitcher, Weather } from '@/components';
+import useProgressiveImage from '@/hooks/lazyLoad';
+
 import { ColumnBox, BackgroundBox, Section } from './Container.styled';
-import { fetchCity } from '../../store/reducers/citySlice';
-import usePosition from '../../hooks/usePosition';
-import { Geocoding } from '../../utils';
-import { Clock, EditableInput, Planer, SourceSwitcher, Weather } from '../../components';
-import useProgressiveImage from '../../hooks/lazyLoad';
 
 function Main() {
   const dispatch = useAppDispatch();

@@ -1,7 +1,9 @@
 import { useForm } from 'react-hook-form';
-import { useAppDispatch } from '../../hooks/redux';
-import { tasksSlice } from '../../store/reducers/taskSlice';
-import { Button } from '../AddTask/component.styled';
+
+import { useAppDispatch } from '@/hooks/redux';
+import { tasksSlice } from '@/store/reducers/taskSlice';
+import { Button } from '@/components/components.styled';
+
 import { CustomInput, ErrorText } from './Inputs.styled';
 
 type IFormData = {

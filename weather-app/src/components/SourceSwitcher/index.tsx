@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from 'react';
+
+import { useAppDispatch, useAppSelector } from '@/hooks/redux';
+import { citySlice } from '@/store/reducers/citySlice';
+import { Typography } from '@/components/components.styled';
+
 import { Input, Label, Switch } from './switch.styled';
-import { useAppDispatch, useAppSelector } from '../../hooks/redux';
-import { citySlice } from '../../store/reducers/citySlice';
-import { Typography } from '../Clock/components.styled';
 
 function SourceSwitcher() {
   const dispatch = useAppDispatch();
-  const [checked, setChecked] = useState(useAppSelector((state) => state.citySlice.isfirstSource));
+  const [checked, setChecked] = useState(useAppSelector((state) => state.citySlice.isFirstSource));
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setChecked(e.target.checked);

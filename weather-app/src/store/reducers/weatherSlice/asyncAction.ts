@@ -1,5 +1,9 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 
+interface I {
+  src: string;
+}
+
 interface II {
   src: string;
   city: string;
@@ -17,6 +21,18 @@ export const fetchOpenWeather = createAsyncThunk(
     try {
       const res = await fetch(src).then((data) => data.json());
       return { res, city };
+    } catch (e) {
+      return thynkAPI.rejectWithValue('Error');
+    }
+  }
+);
+
+export const fetchOpenWeatherPosition = createAsyncThunk(
+  'weather/fetchPosition',
+  async ({ src }: I, thynkAPI) => {
+    try {
+      const res = await fetch(src).then((data) => data.json());
+      return { res };
     } catch (e) {
       return thynkAPI.rejectWithValue('Error');
     }

@@ -1,5 +1,7 @@
 import React from 'react';
-import Portal from '../Portal';
+
+import Portal from '@/components/Portal';
+
 import { Button, TranslucentBackground, ModalBox } from './components.styled';
 
 interface IModalProps {

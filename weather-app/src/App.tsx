@@ -1,8 +1,8 @@
 import React from 'react';
 import { Route, Routes } from 'react-router-dom';
+
 import { ErrorBoundary } from './components';
 import { AppRoutes } from './constants';
-
 import { ErrorPage, MainPage } from './pages';
 
 function App() {

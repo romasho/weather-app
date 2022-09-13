@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { useAppDispatch, useAppSelector } from '../../hooks/redux';
-import { citySlice } from '../../store/reducers/citySlice';
-import { Typography } from '../Clock/components.styled';
+
+import { citySlice } from '@/store/reducers/citySlice';
+import { useAppDispatch, useAppSelector } from '@/hooks/redux';
+import { Typography } from '@/components/components.styled';
+
 import { Input } from './components.styled';
 
 interface IFormData {

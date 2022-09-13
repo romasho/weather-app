@@ -1,5 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { Typography, TypographySpan } from './components.styled';
+
+import { Typography } from '@/components/components.styled';
+
+import { TypographySpan } from './components.styled';
 
 function Clock() {
   const [date, setDate] = useState(new Date());

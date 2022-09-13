@@ -6,6 +6,9 @@ export const Geocoding = (longitude: number, latitude: number) =>
 export const openWeatherUrl = (lat: string, lon: string) =>
   `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&units=metric&exclude=current,minutely,hourly,alerts&appid=${tokenOpenWeather}`;
 
+export const openWeatherUrlForCord = (city: string) =>
+  `https://api.openweathermap.org/geo/1.0/direct?q=${city}&limit=1&appid=${tokenOpenWeather}`;
+
 export function getTomorrow() {
   const now = new Date();
 

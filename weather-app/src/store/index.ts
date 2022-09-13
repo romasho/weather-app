@@ -1,22 +1,31 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
-import { openWeatherApi } from '../services';
+import { persistStore, persistReducer } from 'redux-persist';
+import storage from 'redux-persist/lib/storage';
+
 import citySlice from './reducers/citySlice';
 import tasksSlice from './reducers/taskSlice';
 import weatherSlice from './reducers/weatherSlice';
+
+const persistConfig = {
+  key: 'root',
+  storage,
+};
 
 const rootReducer = combineReducers({
   citySlice,
   weatherSlice,
   tasksSlice,
-  [openWeatherApi.reducerPath]: openWeatherApi.reducer,
 });
 
-export const setupStore = () =>
-  configureStore({
-    reducer: rootReducer,
-    middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(openWeatherApi.middleware),
-  });
+const persistedReducer = persistReducer(persistConfig, rootReducer);
+
+export const store = configureStore({
+  reducer: persistedReducer,
+  middleware: (getDefaultMiddleware) => getDefaultMiddleware(),
+});
+
+export const persistor = persistStore(store);
 
 export type RootState = ReturnType<typeof rootReducer>;
-export type AppStore = ReturnType<typeof setupStore>;
+export type AppStore = typeof store;
 export type AppDispatch = AppStore['dispatch'];

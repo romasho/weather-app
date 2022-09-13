@@ -1,5 +1,6 @@
-import theme from '../../theme';
-import { Typography } from '../Clock/components.styled';
+import theme from '@/theme';
+import { Typography } from '@/components/components.styled';
+
 import { WeatherBox } from './components.styled';
 
 interface IDayProps {

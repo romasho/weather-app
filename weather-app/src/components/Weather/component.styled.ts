@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+
 import { Section } from '../../pages/Main/Container.styled';
 
 export const SectionWeather = styled(Section)`
@@ -20,5 +21,5 @@ export const Message = styled.h2`
   padding: 10px 10px;
   font-weight: bold;
   font-size: 2.5rem;
-  color: ${(props) => props.theme.palette.text.primary};
+  color: ${(props) => props.theme.palette.primary.main};
 `;

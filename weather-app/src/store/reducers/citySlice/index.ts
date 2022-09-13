@@ -2,19 +2,17 @@ import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 export interface CityState {
   city: string;
-  isfirstSource: boolean;
+  isFirstSource: boolean;
 }
 
 //  "OpenWeather" - false | "StormGlass" - true
 
 const STATE: CityState = {
   city: '',
-  isfirstSource: true,
+  isFirstSource: true,
 };
 
-const initialState: CityState = localStorage.getItem('UtilsState')
-  ? JSON.parse(String(localStorage.getItem('UtilsState')))
-  : STATE;
+const initialState: CityState = STATE;
 
 export const fetchCity = createAsyncThunk('city/fetchCard', async (src: string) => {
   const res = await fetch(src).then((data) => data.json());
@@ -27,17 +25,14 @@ export const citySlice = createSlice({
   reducers: {
     changeCity: (state, action: PayloadAction<string>) => {
       state.city = action.payload;
-      localStorage.setItem('UtilsState', JSON.stringify(state));
     },
     changeSource: (state) => {
-      state.isfirstSource = !state.isfirstSource;
-      localStorage.setItem('UtilsState', JSON.stringify(state));
+      state.isFirstSource = !state.isFirstSource;
     },
   },
   extraReducers: {
     [fetchCity.fulfilled.type]: (state, action) => {
       state.city = action.payload.features[0].text;
-      localStorage.setItem('UtilsState', JSON.stringify(state));
     },
   },
 });

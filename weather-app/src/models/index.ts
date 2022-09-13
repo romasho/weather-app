@@ -24,7 +24,7 @@ export interface IWeatherPerDay {
       id: number;
       icon: string;
       main: string;
-    },
+    }
   ];
 }
 
@@ -52,6 +52,8 @@ export interface WeatherState {
   isLoading: boolean;
   errorOpen: string;
   errorStorm: string;
+  lat: string;
+  lon: string;
 }
 
 export interface ITask {

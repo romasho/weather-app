@@ -1,9 +1,9 @@
-import { AddTask, Task } from '..';
-import { useAppSelector } from '../../hooks/redux';
-import { getToday } from '../../utils';
-import { Typography } from '../Clock/components.styled';
+import theme from '@/theme';
+import { Typography } from '@/components/components.styled';
+import { AddTask, Task } from '@/components';
+import { useAppSelector } from '@/hooks/redux';
+import { getToday } from '@/utils';
 
-import theme from '../../theme';
 import CustomBox from './ColumnBox.styled';
 
 function Planer() {

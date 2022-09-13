@@ -1,12 +1,20 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+
 import {
   WeatherState,
   IWeatherPerDay,
   IStormGlassResponse,
   IOpenWeatherResponse,
-} from '../../../models';
-import { getTomorrow } from '../../../utils';
-import { fetchImage, fetchOpenWeather, fetchStormGlass } from './asyncAction';
+  ICoord,
+} from '@/models';
+import { getTomorrow } from '@/utils';
+
+import {
+  fetchImage,
+  fetchOpenWeather,
+  fetchStormGlass,
+  fetchOpenWeatherPosition,
+} from './asyncAction';
 
 const STATE: WeatherState = {
   bgImage: '',
@@ -16,13 +24,11 @@ const STATE: WeatherState = {
   isLoading: false,
   errorOpen: '',
   errorStorm: '',
+  lat: '',
+  lon: '',
 };
 
-const initialState: WeatherState =
-  localStorage.getItem('WeatherState') &&
-  JSON.parse(String(localStorage.getItem('WeatherState'))).expiresDate === String(getTomorrow())
-    ? JSON.parse(String(localStorage.getItem('WeatherState')))
-    : STATE;
+const initialState: WeatherState = STATE;
 
 export const weatherSlice = createSlice({
   name: 'weather',
@@ -51,7 +57,6 @@ export const weatherSlice = createSlice({
         state.expiresDate = String(getTomorrow());
         state.isLoading = false;
       }
-      localStorage.setItem('WeatherState', JSON.stringify(state));
     },
     [fetchOpenWeather.rejected.type]: (state) => {
       state.isLoading = true;
@@ -75,7 +80,28 @@ export const weatherSlice = createSlice({
         state.expiresDate = String(getTomorrow());
         state.isLoading = false;
       }
-      localStorage.setItem('WeatherState', JSON.stringify(state));
+    },
+    [fetchOpenWeatherPosition.pending.type]: (state) => {
+      state.isLoading = true;
+      state.errorOpen = '';
+    },
+    [fetchOpenWeatherPosition.fulfilled.type]: (
+      state,
+      action: PayloadAction<{ res: ICoord[] }>
+    ) => {
+      if (action.payload.res?.length) {
+        state.lat = action.payload.res[0].lat;
+        state.lon = action.payload.res[0].lon;
+      } else {
+        state.isLoading = false;
+        state.errorOpen = 'error';
+        state.lat = '';
+        state.lon = '';
+      }
+    },
+    [fetchOpenWeatherPosition.rejected.type]: (state) => {
+      state.isLoading = false;
+      state.errorOpen = 'error';
     },
   },
 });

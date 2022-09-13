@@ -8,5 +8,6 @@ export { default as AddTask } from './AddTask';
 export { default as Form } from './Form';
 export { default as Task } from './Task';
 export { default as Planer } from './Planer';
+export { default as Loader } from './Loader';
 export { default as Weather } from './Weather';
 export { default as ErrorBoundary } from './ErrorBoundary';

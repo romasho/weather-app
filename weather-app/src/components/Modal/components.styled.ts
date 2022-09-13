@@ -1,5 +1,6 @@
 import styled from 'styled-components';
-import { Button as styledButton } from '../AddTask/component.styled';
+
+import { Button as styledButton } from '@/components/components.styled';
 
 export const Button = styled(styledButton)`
   position: absolute;

@@ -1,10 +1,10 @@
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
-import { ITask } from '../../models';
-import theme from '../../theme';
-import { useAppDispatch } from '../../hooks/redux';
-import { tasksSlice } from '../../store/reducers/taskSlice';
-import { Typography } from '../Clock/components.styled';
-import { Button } from '../AddTask/component.styled';
+
+import { ITask } from '@/models';
+import theme from '@/theme';
+import { useAppDispatch } from '@/hooks/redux';
+import { tasksSlice } from '@/store/reducers/taskSlice';
+import { Button, Typography } from '@/components/components.styled';
 
 function Task({ time, title }: ITask) {
   const dispatch = useAppDispatch();
