@@ -4,6 +4,7 @@ type TypographyPropsType = {
   color?: string;
   fontSize?: string;
   inline?: boolean;
+  padding?: string;
 };
 
 export const TypographySpan = styled.span<TypographyPropsType>`
@@ -15,4 +16,5 @@ export const TypographySpan = styled.span<TypographyPropsType>`
   letter-spacing: 0.00938em;
   color: ${(props) => props.color};
   ${(props) => (props.inline ? 'display: inline;' : '')};
+  padding: ${(props) => props.padding};
 `;

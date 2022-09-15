@@ -2,6 +2,8 @@ import React from 'react';
 
 import { Typography } from '@/components/components.styled';
 
+import { Box } from './Container.styled';
+
 interface Props {
   error?: Error | null;
   goBack?: () => void;
@@ -9,16 +11,14 @@ interface Props {
 
 function ErrorPage({ error }: Props) {
   return (
-    <div
-      style={{ display: 'flex', alignItems: 'center', flexDirection: 'column', padding: '4rem' }}
-    >
+    <Box>
       <Typography>{error ? 'Sorry.. there was an error' : 'Malformed URL'}</Typography>
       <Typography fontSize="1.5rem">
         {error
           ? error && error.toString()
           : 'The link you entered does not look like a valid link.'}
       </Typography>
-    </div>
+    </Box>
   );
 }
 

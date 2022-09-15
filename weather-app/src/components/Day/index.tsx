@@ -8,7 +8,7 @@ import { ReactComponent as Wind } from '@/assets/wind.svg';
 import theme from '@/theme';
 import { Typography } from '@/components/components.styled';
 
-import { WeatherBox } from './components.styled';
+import { Container, DetailedWeatherBox, FlexBoxCenter, WeatherBox } from './components.styled';
 
 interface IDayProps {
   day: number;
@@ -44,17 +44,8 @@ function Day({
   return (
     <>
       {index === 0 ? (
-        <WeatherBox
-          onClick={toggleIsOpened}
-          style={{
-            flexDirection: 'row',
-          }}
-        >
-          <img
-            src={`https://openweathermap.org/img/wn/${imgCode}@2x.png`}
-            alt="weather icon"
-            style={{ height: '100%' }}
-          />
+        <WeatherBox onClick={toggleIsOpened} flexDirection="row">
+          <img src={`https://openweathermap.org/img/wn/${imgCode}@2x.png`} alt="weather icon" />
           <div>
             <Typography color="white" fontSize={'2rem'}>
               Today
@@ -76,8 +67,8 @@ function Day({
         </WeatherBox>
       )}
       <Modal isOpened={isOpened} onCancel={toggleIsOpened}>
-        <WeatherBox>
-          <div style={{ display: 'flex', alignItems: 'center' }}>
+        <DetailedWeatherBox>
+          <FlexBoxCenter>
             <Typography color={theme.colors.main} fontSize={'2.5rem'}>
               {Math.floor(temp)}°
             </Typography>
@@ -87,8 +78,8 @@ function Day({
                 {weather.description[0].toUpperCase() + weather.description.slice(1)}
               </Typography>
             </div>
-          </div>
-          <div style={{ display: 'flex', alignItems: 'center', columnGap: '1rem' }}>
+          </FlexBoxCenter>
+          <FlexBoxCenter columnGap="1rem">
             <Typography color={theme.colors.main} fontSize={'1.5rem'}>
               <Pressure /> {Math.floor(pressure)} hPa
             </Typography>
@@ -98,23 +89,16 @@ function Day({
             <Typography color={theme.colors.main} fontSize={'1.5rem'}>
               <Wind /> {speed} mph
             </Typography>
-          </div>
-          <div
-            style={{
-              display: 'flex',
-              justifyContent: 'space-around',
-              width: '100%',
-              padding: '1rem',
-            }}
-          >
+          </FlexBoxCenter>
+          <Container>
             <Typography color={theme.colors.main} fontSize={'1.5rem'}>
               Morning: {Math.floor(morn)}°
             </Typography>
             <Typography color={theme.colors.main} fontSize={'1.5rem'}>
               Night: {Math.floor(night)}°
             </Typography>
-          </div>
-        </WeatherBox>
+          </Container>
+        </DetailedWeatherBox>
       </Modal>
     </>
   );

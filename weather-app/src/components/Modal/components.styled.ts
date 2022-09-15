@@ -1,13 +1,13 @@
 import styled from 'styled-components';
 
-import { Button as styledButton } from '@/components/components.styled';
+import { IconButton as styledButton } from '@/components/components.styled';
 
 export const Button = styled(styledButton)`
   position: absolute;
   top: 0.5rem;
   right: 0.5rem;
-  border-radius: 1rem;
   font-size: 2rem;
+  line-height: 1rem;
 `;
 
 export const TranslucentBackground = styled.div`

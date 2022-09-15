@@ -10,6 +10,7 @@ export const SectionWeather = styled(Section)`
     flex-wrap: wrap;
     flex-direction: column;
     padding: 1rem;
+    align-items: center;
   }
 
   @media (min-width: 1024px) {

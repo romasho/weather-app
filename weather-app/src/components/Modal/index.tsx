@@ -23,9 +23,7 @@ export default function Modal({ isOpened, onCancel, children }: IModalProps) {
         <Portal>
           <TranslucentBackground onClick={handleClick}>
             <ModalBox>
-              <Button style={{ borderRadius: '1rem' }} onClick={onCancel}>
-                &#215;
-              </Button>
+              <Button onClick={onCancel}>&#215;</Button>
               {children}
             </ModalBox>
           </TranslucentBackground>

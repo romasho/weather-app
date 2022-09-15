@@ -38,6 +38,11 @@ export const weatherSlice = createSlice({
       state.lat = action.payload.lat;
       state.lon = action.payload.lon;
     },
+    clearWeatherDate: (state) => {
+      state.openWeather = {};
+      state.stormGlass = {};
+      state.expiresDate = String(getTomorrow());
+    },
   },
   extraReducers: {
     [fetchImage.fulfilled.type]: (state, action) => {
@@ -55,23 +60,18 @@ export const weatherSlice = createSlice({
         state.errorOpen = 'Not correct request';
         return;
       }
-      if (
-        !Object.prototype.hasOwnProperty.call(state.openWeather, action.payload.city.toUpperCase())
-      ) {
-        console.log(action.payload.res.daily);
-        state.openWeather[action.payload.city.toUpperCase()] = action.payload.res.daily.map(
-          (day: IWeatherPerDay) => ({
-            dt: day.dt,
-            temp: day.temp,
-            weather: day.weather,
-            humidity: day.humidity,
-            pressure: day.pressure,
-            wind_speed: day.wind_speed,
-          })
-        );
-        state.expiresDate = String(getTomorrow());
-        state.isLoading = false;
-      }
+      state.openWeather[action.payload.city.toUpperCase()] = action.payload.res.daily.map(
+        (day: IWeatherPerDay) => ({
+          dt: day.dt,
+          temp: day.temp,
+          weather: day.weather,
+          humidity: day.humidity,
+          pressure: day.pressure,
+          wind_speed: day.wind_speed,
+        })
+      );
+      state.expiresDate = String(getTomorrow());
+      state.isLoading = false;
     },
     [fetchOpenWeather.rejected.type]: (state) => {
       state.isLoading = true;
@@ -88,28 +88,25 @@ export const weatherSlice = createSlice({
         state.errorStorm = 'Not correct request';
         return;
       }
-      if (
-        !Object.prototype.hasOwnProperty.call(state.stormGlass, action.payload.city.toUpperCase())
-      ) {
-        const res = action.payload.res.hours.filter(
-          (hour, index) => index > 0 && (index - 12) % 24 === 0
-        );
-        const morn = action.payload.res.hours.filter(
-          (hour, index) => index > 0 && (index - 8) % 24 === 0
-        );
 
-        const night = action.payload.res.hours.filter(
-          (hour, index) => index > 0 && (index - 20) % 24 === 0
-        );
-        res.forEach((el, index) => {
-          el.airTemperature.morn = morn[index].airTemperature.noaa;
-          el.airTemperature.night = night[index].airTemperature.noaa;
-        });
+      const res = action.payload.res.hours.filter(
+        (hour, index) => index > 0 && (index - 12) % 24 === 0
+      );
+      const morn = action.payload.res.hours.filter(
+        (hour, index) => index > 0 && (index - 8) % 24 === 0
+      );
 
-        state.stormGlass[action.payload.city.toUpperCase()] = res;
-        state.expiresDate = String(getTomorrow());
-        state.isLoading = false;
-      }
+      const night = action.payload.res.hours.filter(
+        (hour, index) => index > 0 && (index - 20) % 24 === 0
+      );
+      res.forEach((el, index) => {
+        el.airTemperature.morn = morn[index].airTemperature.noaa;
+        el.airTemperature.night = night[index].airTemperature.noaa;
+      });
+
+      state.stormGlass[action.payload.city.toUpperCase()] = res;
+      state.expiresDate = String(getTomorrow());
+      state.isLoading = false;
     },
     [fetchOpenWeatherPosition.pending.type]: (state) => {
       state.isLoading = true;

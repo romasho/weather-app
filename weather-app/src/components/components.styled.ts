@@ -52,10 +52,18 @@ export const Button = styled.button<ButtonPropsType>`
   }
 `;
 
+export const IconButton = styled(Button)`
+  border-radius: 3rem;
+  min-width: auto;
+  padding: 0.75rem;
+`;
+
 type TypographyPropsType = {
   color?: string;
   fontSize?: string;
   inline?: boolean;
+  padding?: string;
+  bold?: boolean;
 };
 
 export const Typography = styled.h2<TypographyPropsType>`
@@ -69,4 +77,6 @@ export const Typography = styled.h2<TypographyPropsType>`
   ${(props) => (props.inline ? 'display: inline;' : '')};
   display: flex;
   align-items: center;
+  padding: ${(props) => props.padding};
+  ${(props) => props.bold && 'font-weight: bold;'}
 `;

@@ -4,7 +4,7 @@ import { useAppDispatch, useAppSelector } from '@/hooks/redux';
 import { citySlice } from '@/store/reducers/citySlice';
 import { Typography } from '@/components/components.styled';
 
-import { Input, Label, Switch } from './switch.styled';
+import { Input, Label, Switch, SwitchContainer } from './switch.styled';
 
 function SourceSwitcher() {
   const dispatch = useAppDispatch();
@@ -19,26 +19,18 @@ function SourceSwitcher() {
   }, [checked]);
 
   return (
-    <div
-      style={{
-        position: 'absolute',
-        top: '0.5rem',
-        right: '0.5rem',
-        display: 'flex',
-        columnGap: '1rem',
-      }}
-    >
-      <Typography fontSize="14px" color="white" style={{ fontWeight: 'bold' }}>
+    <SwitchContainer>
+      <Typography fontSize="14px" color="white" bold>
         OpenWeather
       </Typography>
       <Label>
         <Input checked={checked} type="checkbox" onChange={handleChange} />
         <Switch />
       </Label>
-      <Typography color="white" fontSize="14px" style={{ fontWeight: 'bold' }}>
+      <Typography color="white" fontSize="14px" bold>
         Storm Glass
       </Typography>
-    </div>
+    </SwitchContainer>
   );
 }
 

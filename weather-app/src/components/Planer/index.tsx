@@ -4,20 +4,16 @@ import { AddTask, Task } from '@/components';
 import { useAppSelector } from '@/hooks/redux';
 import { getToday } from '@/utils';
 
-import CustomBox from './ColumnBox.styled';
+import { CustomBox, Title } from './ColumnBox.styled';
 
 function Planer() {
   const { tasks } = useAppSelector((state) => state.tasksSlice);
 
   return (
     <CustomBox>
-      <Typography
-        style={{ padding: '10px 10px', fontWeight: 'bold' }}
-        color={theme.colors.main}
-        fontSize="2rem"
-      >
+      <Title bold color={theme.colors.main} fontSize="2rem">
         Tasks for today
-      </Typography>
+      </Title>
 
       {tasks
         .filter((task) => task.date === getToday())

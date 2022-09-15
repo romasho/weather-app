@@ -3,7 +3,7 @@ import { ITask } from '@/models';
 import theme from '@/theme';
 import { useAppDispatch } from '@/hooks/redux';
 import { tasksSlice } from '@/store/reducers/taskSlice';
-import { Button, Typography } from '@/components/components.styled';
+import { IconButton, Typography } from '@/components/components.styled';
 
 function Task({ time, title }: ITask) {
   const dispatch = useAppDispatch();
@@ -25,9 +25,9 @@ function Task({ time, title }: ITask) {
       <Typography color={theme.colors.main} fontSize="1.25rem">
         {title}
       </Typography>
-      <Button color="primary" onClick={() => dispatch(tasksSlice.actions.removeTask(title))}>
+      <IconButton color="primary" onClick={() => dispatch(tasksSlice.actions.removeTask(title))}>
         <DeleteIcon />
-      </Button>
+      </IconButton>
     </div>
   );
 }

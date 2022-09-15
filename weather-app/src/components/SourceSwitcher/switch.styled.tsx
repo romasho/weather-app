@@ -50,3 +50,11 @@ export const SettingsBox = styled.div`
   display: flex;
   column-gap: 1rem;
 `;
+
+export const SwitchContainer = styled.div`
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  display: flex;
+  column-gap: 1rem;
+`;

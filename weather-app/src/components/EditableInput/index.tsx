@@ -33,12 +33,7 @@ function EditableInput() {
           <Input {...register('name')} type="text" defaultValue={city} autoFocus />
         </form>
       ) : (
-        <Typography
-          onClick={() => setIsEditing(true)}
-          fontSize={'2.5rem'}
-          color="white"
-          style={{ fontWeight: 'bold' }}
-        >
+        <Typography onClick={() => setIsEditing(true)} fontSize={'2.5rem'} color="white" bold>
           {city}
         </Typography>
       )}

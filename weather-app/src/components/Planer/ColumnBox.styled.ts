@@ -1,6 +1,8 @@
 import styled from 'styled-components';
 
-const CustomBox = styled.section`
+import { Typography } from '@/components/components.styled';
+
+export const CustomBox = styled.section`
   height: 100%;
   padding: 0 1rem;
   overflow-y: auto;
@@ -23,4 +25,6 @@ const CustomBox = styled.section`
   }
 `;
 
-export default CustomBox;
+export const Title = styled(Typography)`
+  padding: 10px 10px;
+`;

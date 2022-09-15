@@ -21,16 +21,20 @@ function Weather() {
 
   useEffect(() => {
     if (lat && lon) {
-      dispatch(fetchOpenWeather({ src: openWeatherUrl(lat, lon), city }));
+      if (!Object.prototype.hasOwnProperty.call(openWeather, city.toUpperCase())) {
+        dispatch(fetchOpenWeather({ src: openWeatherUrl(lat, lon), city }));
+      }
     }
     if (isFirstSource && lat && lon) {
-      dispatch(fetchStormGlass({ lat, lng: lon, city }));
+      if (!Object.prototype.hasOwnProperty.call(stormGlass, city.toUpperCase())) {
+        dispatch(fetchStormGlass({ lat, lng: lon, city }));
+      }
     }
   }, [lat, lon, isFirstSource]);
 
   useEffect(() => {
     dispatch(fetchOpenWeatherPosition({ src: openWeatherUrlForCord(city) }));
-    console.log('www');
+
     if (openWeather[city.toUpperCase()]) {
       dispatch(fetchImage(openWeather[city.toUpperCase()][0].weather[0].main));
     }
