@@ -26,15 +26,15 @@ function Weather() {
     if (isFirstSource && lat && lon) {
       dispatch(fetchStormGlass({ lat, lng: lon, city }));
     }
-  }, [lat, lon]);
+  }, [lat, lon, isFirstSource]);
 
   useEffect(() => {
     dispatch(fetchOpenWeatherPosition({ src: openWeatherUrlForCord(city) }));
-
+    console.log('www');
     if (openWeather[city.toUpperCase()]) {
       dispatch(fetchImage(openWeather[city.toUpperCase()][0].weather[0].main));
     }
-  }, [city]);
+  }, [city, isFirstSource]);
 
   return (
     <SectionWeather>
@@ -45,31 +45,44 @@ function Weather() {
         <Message>Sorry, something went wrong. Try another source.</Message>
       )}
       {!lat && <Message>Invalid city name</Message>}
-      {!isFirstSource
-        ? openWeather[city.toUpperCase()] &&
-          openWeather[city.toUpperCase()]
-            .slice(0, 7)
-            .map((day, index) => (
-              <Day
-                day={day.dt * 1000}
-                imgCode={day.weather[0].icon}
-                temp={day.temp.day}
-                key={day.dt}
-                index={index}
-              />
-            ))
-        : stormGlass[city.toUpperCase()] &&
-          stormGlass[city.toUpperCase()]
-            .slice(0, 7)
-            .map((day, index) => (
-              <Day
-                day={Date.parse(day.time)}
-                imgCode={openWeather[city.toUpperCase()][index].weather[0].icon}
-                temp={day.airTemperature.noaa}
-                key={day.time}
-                index={index}
-              />
-            ))}
+      {!isFirstSource &&
+        openWeather[city.toUpperCase()] &&
+        openWeather[city.toUpperCase()]
+          .slice(0, 7)
+          .map((day, index) => (
+            <Day
+              day={day.dt * 1000}
+              imgCode={day.weather[0].icon}
+              temp={day.temp.day}
+              key={day.dt}
+              index={index}
+              pressure={day.pressure}
+              humidity={day.humidity}
+              night={day.temp.night}
+              morn={day.temp.morn}
+              speed={day.wind_speed}
+              weather={day.weather[0]}
+            />
+          ))}
+      {isFirstSource &&
+        stormGlass[city.toUpperCase()] &&
+        stormGlass[city.toUpperCase()]
+          .slice(0, 7)
+          .map((day, index) => (
+            <Day
+              day={Date.parse(day.time)}
+              imgCode={openWeather[city.toUpperCase()][index].weather[0].icon}
+              temp={day.airTemperature.noaa}
+              key={day.time}
+              index={index}
+              pressure={day.pressure.noaa}
+              humidity={day.humidity.noaa}
+              night={day.airTemperature.night}
+              morn={day.airTemperature.morn}
+              speed={day.currentSpeed.noaa}
+              weather={openWeather[city.toUpperCase()][index].weather[0]}
+            />
+          ))}
     </SectionWeather>
   );
 }

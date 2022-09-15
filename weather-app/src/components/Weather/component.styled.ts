@@ -21,5 +21,5 @@ export const Message = styled.h2`
   padding: 10px 10px;
   font-weight: bold;
   font-size: 2.5rem;
-  color: ${(props) => props.theme.palette.primary.main};
+  color: ${(props) => props.theme.colors.main};
 `;

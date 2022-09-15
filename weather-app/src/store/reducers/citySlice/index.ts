@@ -9,7 +9,7 @@ export interface CityState {
 
 const STATE: CityState = {
   city: '',
-  isFirstSource: true,
+  isFirstSource: false,
 };
 
 const initialState: CityState = STATE;

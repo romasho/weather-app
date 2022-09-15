@@ -10,10 +10,10 @@ function Planer() {
   const { tasks } = useAppSelector((state) => state.tasksSlice);
 
   return (
-    <CustomBox component="section">
+    <CustomBox>
       <Typography
         style={{ padding: '10px 10px', fontWeight: 'bold' }}
-        color={theme.palette.text.primary}
+        color={theme.colors.main}
         fontSize="2rem"
       >
         Tasks for today

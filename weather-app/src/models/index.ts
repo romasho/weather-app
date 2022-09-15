@@ -1,6 +1,9 @@
 export interface ITempInfo {
-  airTemperature: { noaa: number; sg: number };
+  airTemperature: { noaa: number; sg: number; night: number; morn: number };
   time: string;
+  pressure: { noaa: number };
+  humidity: { noaa: number };
+  currentSpeed: { noaa: number };
 }
 
 export interface IStormGlassResponse {
@@ -18,7 +21,12 @@ export interface IWeatherPerDay {
   dt: number;
   temp: {
     day: number;
+    night: number;
+    morn: number;
   };
+  pressure: number;
+  humidity: number;
+  wind_speed: number;
   weather: [
     {
       id: number;

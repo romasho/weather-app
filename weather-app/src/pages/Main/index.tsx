@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 
 import { useAppDispatch, useAppSelector } from '@/hooks/redux';
 import { fetchCity } from '@/store/reducers/citySlice';
+import { weatherSlice } from '@/store/reducers/weatherSlice';
 import usePosition from '@/hooks/usePosition';
 import { Geocoding } from '@/utils';
 import { Clock, EditableInput, Planer, SourceSwitcher, Weather } from '@/components';
@@ -25,6 +26,9 @@ function Main() {
 
   useEffect(() => {
     getPosition();
+    if (latitude && longitude) {
+      dispatch(weatherSlice.actions.setPosition({ lat: latitude + '', lon: longitude + '' }));
+    }
   }, [latitude, longitude]);
 
   return (
@@ -38,12 +42,7 @@ function Main() {
           backgroundImage: `url(${loaded || './шфидщ.png'})`,
         }}
       >
-        <Section
-          sx={{
-            flexDirection: { xs: 'column', md: 'row' },
-            alignItems: { xs: 'flex-start', md: 'center' },
-          }}
-        >
+        <Section>
           <Clock />
           <EditableInput />
           <SourceSwitcher />

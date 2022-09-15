@@ -7,7 +7,5 @@ import { Loader } from './components';
 const LOADER_SIZE = 100;
 
 export default () => {
-  return (
-    <Loader type="Bars" color={theme.palette.primary} height={LOADER_SIZE} width={LOADER_SIZE} />
-  );
+  return <Loader color={theme.colors.main} height={LOADER_SIZE} width={LOADER_SIZE} />;
 };

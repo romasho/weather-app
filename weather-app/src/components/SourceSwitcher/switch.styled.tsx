@@ -35,7 +35,7 @@ export const Input = styled.input`
   position: absolute;
 
   &:checked + ${Switch} {
-    background: ${theme.palette.text.primary};
+    background: ${theme.colors.main};
 
     &:before {
       transform: translate(1.5rem, -50%);

@@ -33,7 +33,12 @@ const initialState: WeatherState = STATE;
 export const weatherSlice = createSlice({
   name: 'weather',
   initialState,
-  reducers: {},
+  reducers: {
+    setPosition: (state, action: PayloadAction<{ lat: string; lon: string }>) => {
+      state.lat = action.payload.lat;
+      state.lon = action.payload.lon;
+    },
+  },
   extraReducers: {
     [fetchImage.fulfilled.type]: (state, action) => {
       state.bgImage = action.payload.urls.regular;
@@ -50,9 +55,19 @@ export const weatherSlice = createSlice({
         state.errorOpen = 'Not correct request';
         return;
       }
-      if (!state.openWeather.hasOwnProperty(action.payload.city.toUpperCase())) {
+      if (
+        !Object.prototype.hasOwnProperty.call(state.openWeather, action.payload.city.toUpperCase())
+      ) {
+        console.log(action.payload.res.daily);
         state.openWeather[action.payload.city.toUpperCase()] = action.payload.res.daily.map(
-          (day: IWeatherPerDay) => ({ dt: day.dt, temp: day.temp, weather: day.weather })
+          (day: IWeatherPerDay) => ({
+            dt: day.dt,
+            temp: day.temp,
+            weather: day.weather,
+            humidity: day.humidity,
+            pressure: day.pressure,
+            wind_speed: day.wind_speed,
+          })
         );
         state.expiresDate = String(getTomorrow());
         state.isLoading = false;
@@ -73,10 +88,25 @@ export const weatherSlice = createSlice({
         state.errorStorm = 'Not correct request';
         return;
       }
-      if (!state.stormGlass.hasOwnProperty(action.payload.city.toUpperCase())) {
-        state.stormGlass[action.payload.city.toUpperCase()] = action.payload.res.hours.filter(
+      if (
+        !Object.prototype.hasOwnProperty.call(state.stormGlass, action.payload.city.toUpperCase())
+      ) {
+        const res = action.payload.res.hours.filter(
           (hour, index) => index > 0 && (index - 12) % 24 === 0
         );
+        const morn = action.payload.res.hours.filter(
+          (hour, index) => index > 0 && (index - 8) % 24 === 0
+        );
+
+        const night = action.payload.res.hours.filter(
+          (hour, index) => index > 0 && (index - 20) % 24 === 0
+        );
+        res.forEach((el, index) => {
+          el.airTemperature.morn = morn[index].airTemperature.noaa;
+          el.airTemperature.night = night[index].airTemperature.noaa;
+        });
+
+        state.stormGlass[action.payload.city.toUpperCase()] = res;
         state.expiresDate = String(getTomorrow());
         state.isLoading = false;
       }

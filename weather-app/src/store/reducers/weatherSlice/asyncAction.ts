@@ -44,7 +44,7 @@ export const fetchStormGlass = createAsyncThunk(
   async ({ lat, lng, city }: III, thynkAPI) => {
     try {
       const res = await fetch(
-        `https://api.stormglass.io/v2/weather/point?lat=${lat}&lng=${lng}&params=airTemperature`,
+        `https://api.stormglass.io/v2/weather/point?lat=${lat}&lng=${lng}&params=airTemperature,humidity,pressure,currentSpeed`,
         {
           headers: {
             Authorization:

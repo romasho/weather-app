@@ -32,11 +32,11 @@ export const Button = styled.button<ButtonPropsType>`
     box-shadow 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,
     border-color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,
     color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
-  color: #b8c1ec;
+  color: ${(props) => props.theme.colors.main};
   ${(props) =>
     props.contained
       ? `color: #000000;
-  background-color: #b8c1ec;`
+  background-color: ${props.theme.colors.main};`
       : ''};
 
   &:hover {
@@ -46,7 +46,7 @@ export const Button = styled.button<ButtonPropsType>`
     ${(props) =>
       props.contained
         ? `box-shadow: 0px 2px 4px -1px rgb(0 0 0 / 20%), 0px 4px 5px 0px rgb(0 0 0 / 14%), 0px 1px 10px 0px rgb(0 0 0 / 12%);
-        background-color: #b8c1ec;
+        background-color: ${props.theme.colors.main};
         `
         : ''};
   }
@@ -67,4 +67,6 @@ export const Typography = styled.h2<TypographyPropsType>`
   letter-spacing: 0.00938em;
   color: ${(props) => props.color};
   ${(props) => (props.inline ? 'display: inline;' : '')};
+  display: flex;
+  align-items: center;
 `;

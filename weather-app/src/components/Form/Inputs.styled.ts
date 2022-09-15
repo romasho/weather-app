@@ -24,7 +24,7 @@ export const CustomInput = styled.input`
   margin: 1rem 0;
 
   &:focus-visible: {
-    border: 2px solid #b8c1ec;
+    border: 2px solid ${(props) => props.theme.colors.main};
   }
 `;
 
