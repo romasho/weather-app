@@ -34,7 +34,7 @@ function EditableInput() {
         </form>
       ) : (
         <Typography onClick={() => setIsEditing(true)} fontSize={'2.5rem'} color="white" bold>
-          {city}
+          {city || 'Enter city name'}
         </Typography>
       )}
     </>

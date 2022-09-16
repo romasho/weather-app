@@ -8,6 +8,14 @@ export const WeatherBox = styled.div<WeatherBoxProps>`
   display: flex;
   align-items: center;
   flex-direction: ${(props) => props.flexDirection || 'column'};
+  cursor: pointer;
+  transition: box-shadow 0.3s;
+  float: left;
+  border-radius: 1rem;
+
+  &:hover {
+    box-shadow: 0 0 1.5rem rgba(0, 0, 0, 0.3);
+  }
 
   @media (max-width: 878px) {
     flex-direction: row;
@@ -15,6 +23,8 @@ export const WeatherBox = styled.div<WeatherBoxProps>`
 `;
 
 export const DetailedWeatherBox = styled(WeatherBox)`
+  cursor: auto;
+
   @media (max-width: 878px) {
     flex-direction: column;
   }
