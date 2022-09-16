@@ -1,0 +1,26 @@
+{
+  "files": {
+    "main.css": "/weather-app/static/css/main.878fa5d0.css",
+    "main.js": "/weather-app/static/js/main.ab42af0a.js",
+    "static/media/Roboto-Light.ttf": "/weather-app/static/media/Roboto-Light.368aee5f4784ab912d2d.ttf",
+    "static/media/Roboto-Thin.ttf": "/weather-app/static/media/Roboto-Thin.b4d8be966f18817506e7.ttf",
+    "static/media/Roboto-Regular.ttf": "/weather-app/static/media/Roboto-Regular.cfe3602cde0ad1c9ae0e.ttf",
+    "static/media/Roboto-Bold.ttf": "/weather-app/static/media/Roboto-Bold.c477ec326ec5faea4705.ttf",
+    "static/media/Roboto-Medium.ttf": "/weather-app/static/media/Roboto-Medium.681f96db2bcb69f520b5.ttf",
+    "static/media/Ubuntu-L.ttf": "/weather-app/static/media/Ubuntu-L.6f3c1eb38795e3d297fe.ttf",
+    "static/media/Ubuntu-R.ttf": "/weather-app/static/media/Ubuntu-R.768d480f584ebef78ff5.ttf",
+    "static/media/Ubuntu-M.ttf": "/weather-app/static/media/Ubuntu-M.3e32921c6310ffd4d0db.ttf",
+    "static/media/Ubuntu-B.ttf": "/weather-app/static/media/Ubuntu-B.4edf04ac879712ff4377.ttf",
+    "static/media/pressure.svg": "/weather-app/static/media/pressure.1b3143b7dbf2ba1120d3f84e4ad77caa.svg",
+    "static/media/humidity.svg": "/weather-app/static/media/humidity.b89c2891e86dca54f1dfd9f1ef9633f3.svg",
+    "index.html": "/weather-app/index.html",
+    "static/media/wind.svg": "/weather-app/static/media/wind.4a82c5c359d9f70646964400d27ccbe7.svg",
+    "static/media/deleteIcon.svg": "/weather-app/static/media/deleteIcon.4ccb0b84366d38ebb76cdf99ab4b180a.svg",
+    "main.878fa5d0.css.map": "/weather-app/static/css/main.878fa5d0.css.map",
+    "main.ab42af0a.js.map": "/weather-app/static/js/main.ab42af0a.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.878fa5d0.css",
+    "static/js/main.ab42af0a.js"
+  ]
+}
