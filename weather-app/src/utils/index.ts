@@ -17,6 +17,14 @@ export function getTomorrow() {
   return tomorrow;
 }
 
+export function getTodayForExpire() {
+  const now = new Date();
+
+  const current = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+
+  return current;
+}
+
 export function getToday() {
   const now = new Date();
 

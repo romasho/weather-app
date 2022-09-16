@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 
 import { Typography } from '@/components/components.styled';
 import { useAppDispatch, useAppSelector } from '@/hooks/redux';
-import { getTomorrow } from '@/utils';
+import { getTodayForExpire } from '@/utils';
 import { weatherSlice } from '@/store/reducers/weatherSlice';
 
 import { TypographySpan } from './components.styled';
@@ -14,7 +14,7 @@ function Clock() {
 
   function tick() {
     setDate(new Date());
-    if (expiresDate === String(getTomorrow())) {
+    if (expiresDate === String(getTodayForExpire())) {
       dispatch(weatherSlice.actions.clearWeatherDate());
     }
   }

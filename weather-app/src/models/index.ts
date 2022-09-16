@@ -3,7 +3,7 @@ export interface ITempInfo {
   time: string;
   pressure: { noaa: number };
   humidity: { noaa: number };
-  currentSpeed: { noaa: number };
+  windSpeed: { noaa: number };
 }
 
 export interface IStormGlassResponse {

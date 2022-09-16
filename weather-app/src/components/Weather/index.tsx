@@ -83,7 +83,7 @@ function Weather() {
               humidity={day.humidity.noaa}
               night={day.airTemperature.night}
               morn={day.airTemperature.morn}
-              speed={day.currentSpeed.noaa}
+              speed={Math.floor(day.windSpeed.noaa * 2.237)}
               weather={openWeather[city.toUpperCase()][index].weather[0]}
             />
           ))}

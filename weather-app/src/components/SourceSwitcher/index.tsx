@@ -10,13 +10,10 @@ function SourceSwitcher() {
   const dispatch = useAppDispatch();
   const [checked, setChecked] = useState(useAppSelector((state) => state.citySlice.isFirstSource));
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setChecked(e.target.checked);
-  };
-
-  useEffect(() => {
+  const handleChange = () => {
+    setChecked(!checked);
     dispatch(citySlice.actions.changeSource());
-  }, [checked]);
+  };
 
   return (
     <SwitchContainer>
