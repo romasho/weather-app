@@ -1,6 +1,6 @@
 import { useCallback, useState } from 'react';
 
-import Modal from '../Modal';
+import { Modal } from '../Modal';
 
 import { ReactComponent as Humidity } from '@/assets/humidity.svg';
 import { ReactComponent as Pressure } from '@/assets/pressure.svg';
@@ -23,7 +23,7 @@ interface IDayProps {
   weather: any;
 }
 
-function Day({
+export function Day({
   day,
   imgCode,
   temp,
@@ -35,42 +35,42 @@ function Day({
   speed,
   weather,
 }: IDayProps) {
-  const [isOpened, setIsOpened] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
 
-  const toggleIsOpened = useCallback(() => {
-    setIsOpened((prev) => !prev);
+  const toggleIsOpen = useCallback(() => {
+    setIsOpen((prev) => !prev);
   }, []);
 
   return (
     <>
       {index === 0 ? (
-        <WeatherBox onClick={toggleIsOpened} flexDirection="row">
+        <WeatherBox onClick={toggleIsOpen} flexDirection="row">
           <img src={`https://openweathermap.org/img/wn/${imgCode}@2x.png`} alt="weather icon" />
           <div>
             <Typography color="white" fontSize={'2rem'}>
               Today
             </Typography>
-            <Typography color="white" fontSize={'4rem'}>{`${Math.floor(temp)}°`}</Typography>
+            <Typography color="white" fontSize={'4rem'}>{`${temp}°`}</Typography>
           </div>
         </WeatherBox>
       ) : (
-        <WeatherBox onClick={toggleIsOpened}>
+        <WeatherBox onClick={toggleIsOpen}>
           <Typography color={theme.colors.main} fontSize={'1.5rem'}>
             {new Date(day).toLocaleString('en-US', {
               weekday: 'short',
             })}
           </Typography>
           <img src={`https://openweathermap.org/img/wn/${imgCode}@2x.png`} alt="weather icon" />
-          <Typography color={theme.colors.main} fontSize={'1.25rem'}>{`${Math.floor(
-            temp
-          )}°`}</Typography>
+          <Typography color={theme.colors.main} fontSize={'1.25rem'}>
+            {temp}°
+          </Typography>
         </WeatherBox>
       )}
-      <Modal isOpened={isOpened} onCancel={toggleIsOpened}>
+      <Modal isOpen={isOpen} onCancel={toggleIsOpen}>
         <DetailedWeatherBox>
           <FlexBoxCenter>
             <Typography color={theme.colors.main} fontSize={'2.5rem'}>
-              {Math.floor(temp)}°
+              {temp}°
             </Typography>
             <img src={`https://openweathermap.org/img/wn/${imgCode}@2x.png`} alt="weather icon" />
             <div>
@@ -81,10 +81,10 @@ function Day({
           </FlexBoxCenter>
           <FlexBoxCenter columnGap="1rem">
             <Typography color={theme.colors.main} fontSize={'1.5rem'}>
-              <Pressure /> {Math.floor(pressure)} hPa
+              <Pressure /> {pressure} hPa
             </Typography>
             <Typography color={theme.colors.main} fontSize={'1.5rem'}>
-              <Humidity /> {Math.floor(humidity)} %
+              <Humidity /> {humidity} %
             </Typography>
             <Typography color={theme.colors.main} fontSize={'1.5rem'}>
               <Wind /> {speed} mph
@@ -92,10 +92,10 @@ function Day({
           </FlexBoxCenter>
           <Container>
             <Typography color={theme.colors.main} fontSize={'1.5rem'}>
-              Morning: {Math.floor(morn)}°
+              Morning: {morn}°
             </Typography>
             <Typography color={theme.colors.main} fontSize={'1.5rem'}>
-              Night: {Math.floor(night)}°
+              Night: {night}°
             </Typography>
           </Container>
         </DetailedWeatherBox>
@@ -103,5 +103,3 @@ function Day({
     </>
   );
 }
-
-export default Day;

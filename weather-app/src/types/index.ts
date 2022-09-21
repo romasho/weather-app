@@ -1,5 +1,7 @@
+import { rootReducer, store } from '@/store';
+
 export interface ITempInfo {
-  airTemperature: { noaa: number; sg: number; night: number; morn: number };
+  airTemperature: { noaa: number; night: number; morn: number };
   time: string;
   pressure: { noaa: number };
   humidity: { noaa: number };
@@ -60,16 +62,21 @@ export interface WeatherState {
   isLoading: boolean;
   errorOpen: string;
   errorStorm: string;
-  lat: string;
-  lon: string;
+  latitude: number;
+  longitude: number;
 }
 
 export interface ITask {
   date: string;
   time: string;
   title: string;
+  id: number;
 }
 
-export interface ITaskstate {
+export interface ITaskState {
   tasks: ITask[];
 }
+
+export type RootState = ReturnType<typeof rootReducer>;
+export type AppStore = typeof store;
+export type AppDispatch = AppStore['dispatch'];

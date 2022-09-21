@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-import { Section } from '../../pages/Main/Container.styled';
+import { Section } from '@/pages/Main/Container.styled';
 
 export const SectionWeather = styled(Section)`
   background: rgba(35, 41, 70, 0.6);

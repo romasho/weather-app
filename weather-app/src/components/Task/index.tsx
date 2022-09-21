@@ -1,23 +1,17 @@
 import { ReactComponent as DeleteIcon } from '@/assets/deleteIcon.svg';
-import { ITask } from '@/models';
+import { ITask } from '@/types';
 import theme from '@/theme';
 import { useAppDispatch } from '@/hooks/redux';
 import { tasksSlice } from '@/store/reducers/taskSlice';
 import { IconButton, Typography } from '@/components/components.styled';
 
-function Task({ time, title }: ITask) {
+import { TaskWrapper } from './components.styled';
+
+export function Task({ time, title }: Omit<ITask, 'id'>) {
   const dispatch = useAppDispatch();
 
   return (
-    <div
-      style={{
-        display: 'flex',
-        flexDirection: 'row',
-        columnGap: '1rem',
-        padding: '0.5rem',
-        alignItems: 'center',
-      }}
-    >
+    <TaskWrapper>
       <Typography color={theme.colors.main} fontSize="1.25rem">
         {time}
       </Typography>
@@ -28,8 +22,6 @@ function Task({ time, title }: ITask) {
       <IconButton color="primary" onClick={() => dispatch(tasksSlice.actions.removeTask(title))}>
         <DeleteIcon />
       </IconButton>
-    </div>
+    </TaskWrapper>
   );
 }
-
-export default Task;

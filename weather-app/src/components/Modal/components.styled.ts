@@ -32,6 +32,9 @@ export const ModalBox = styled.div`
   padding: 3rem;
   margin: 2rem 2rem 4rem 2rem;
   background: center/cover, rgba(35, 41, 70, 0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
 
   backdrop-filter: blur(5px);
 `;

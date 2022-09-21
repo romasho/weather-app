@@ -2,19 +2,19 @@ import React, { useEffect, useState } from 'react';
 
 import { Typography } from '@/components/components.styled';
 import { useAppDispatch, useAppSelector } from '@/hooks/redux';
-import { getTodayForExpire } from '@/utils';
+import { getTomorrow } from '@/utils';
 import { weatherSlice } from '@/store/reducers/weatherSlice';
 
 import { TypographySpan } from './components.styled';
 
-function Clock() {
+export function Clock() {
   const [date, setDate] = useState(new Date());
   const dispatch = useAppDispatch();
   const { expiresDate } = useAppSelector((state) => state.weatherSlice);
 
   function tick() {
     setDate(new Date());
-    if (expiresDate === String(getTodayForExpire())) {
+    if (expiresDate !== getTomorrow()) {
       dispatch(weatherSlice.actions.clearWeatherDate());
     }
   }
@@ -30,14 +30,14 @@ function Clock() {
     hour: '2-digit',
     minute: '2-digit',
   });
+  const formattedTime = time.slice(0, -2);
+  const timeOfDay = time.slice(-2);
 
   return (
     <div>
-      <Typography color="white" fontSize={'4rem'} padding="1.5rem 0">
-        {time.slice(0, -2)}
-        <TypographySpan color="white" fontSize={'2rem'} inline padding="1.5rem 0 0 0">
-          {time.slice(-2)}
-        </TypographySpan>
+      <Typography color="white" fontSize={'4rem'}>
+        {formattedTime}
+        <TypographySpan>{timeOfDay}</TypographySpan>
       </Typography>
 
       <Typography color="white" fontSize={'2rem'}>
@@ -51,5 +51,3 @@ function Clock() {
     </div>
   );
 }
-
-export default Clock;

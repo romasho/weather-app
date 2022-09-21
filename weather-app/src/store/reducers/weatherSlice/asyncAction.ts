@@ -1,23 +1,23 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 
-interface I {
+interface IParamsPosition {
   src: string;
 }
 
-interface II {
+interface IParamsOpenWeather {
   src: string;
   city: string;
 }
 
-interface III {
-  lat: string;
-  lng: string;
+interface IParamsStormGlass {
+  latitude: number;
+  longitude: number;
   city: string;
 }
 
 export const fetchOpenWeather = createAsyncThunk(
   'weather/fetchWeather',
-  async ({ src, city }: II, thynkAPI) => {
+  async ({ src, city }: IParamsOpenWeather, thynkAPI) => {
     try {
       const res = await fetch(src).then((data) => data.json());
       return { res, city };
@@ -29,7 +29,7 @@ export const fetchOpenWeather = createAsyncThunk(
 
 export const fetchOpenWeatherPosition = createAsyncThunk(
   'weather/fetchPosition',
-  async ({ src }: I, thynkAPI) => {
+  async ({ src }: IParamsPosition, thynkAPI) => {
     try {
       const res = await fetch(src).then((data) => data.json());
       return { res };
@@ -41,10 +41,10 @@ export const fetchOpenWeatherPosition = createAsyncThunk(
 
 export const fetchStormGlass = createAsyncThunk(
   'weather/fetchWeatherStormGlass',
-  async ({ lat, lng, city }: III, thynkAPI) => {
+  async ({ latitude, longitude, city }: IParamsStormGlass, thynkAPI) => {
     try {
       const res = await fetch(
-        `https://api.stormglass.io/v2/weather/point?lat=${lat}&lng=${lng}&params=airTemperature,humidity,pressure,windSpeed`,
+        `https://api.stormglass.io/v2/weather/point?lat=${latitude}&lng=${longitude}&params=airTemperature,humidity,pressure,windSpeed`,
         {
           headers: {
             Authorization:

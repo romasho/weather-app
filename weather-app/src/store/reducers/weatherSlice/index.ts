@@ -6,7 +6,8 @@ import {
   IStormGlassResponse,
   IOpenWeatherResponse,
   ICoord,
-} from '@/models';
+  ITempInfo,
+} from '@/types';
 import { getTomorrow } from '@/utils';
 
 import {
@@ -20,12 +21,12 @@ const STATE: WeatherState = {
   bgImage: '',
   openWeather: {},
   stormGlass: {},
-  expiresDate: String(getTomorrow()),
+  expiresDate: getTomorrow(),
   isLoading: false,
   errorOpen: '',
   errorStorm: '',
-  lat: '',
-  lon: '',
+  latitude: 0,
+  longitude: 0,
 };
 
 const initialState: WeatherState = STATE;
@@ -34,14 +35,15 @@ export const weatherSlice = createSlice({
   name: 'weather',
   initialState,
   reducers: {
-    setPosition: (state, action: PayloadAction<{ lat: string; lon: string }>) => {
-      state.lat = action.payload.lat;
-      state.lon = action.payload.lon;
+    setPosition: (state, action: PayloadAction<{ latitude: number; longitude: number }>) => {
+      state.latitude = +action.payload.latitude;
+      state.longitude = +action.payload.longitude;
     },
     clearWeatherDate: (state) => {
       state.openWeather = {};
       state.stormGlass = {};
-      state.expiresDate = String(getTomorrow());
+      state.expiresDate = getTomorrow();
+      state.isLoading = false;
     },
   },
   extraReducers: {
@@ -62,15 +64,19 @@ export const weatherSlice = createSlice({
       }
       state.openWeather[action.payload.city.toUpperCase()] = action.payload.res.daily.map(
         (day: IWeatherPerDay) => ({
-          dt: day.dt,
-          temp: day.temp,
+          dt: day.dt * 1000,
+          temp: {
+            day: Math.floor(day.temp.day),
+            night: Math.floor(day.temp.night),
+            morn: Math.floor(day.temp.morn),
+          },
           weather: day.weather,
-          humidity: day.humidity,
-          pressure: day.pressure,
+          humidity: Math.floor(day.humidity),
+          pressure: Math.floor(day.pressure),
           wind_speed: day.wind_speed,
         })
       );
-      state.expiresDate = String(getTomorrow());
+      state.expiresDate = getTomorrow();
       state.isLoading = false;
     },
     [fetchOpenWeather.rejected.type]: (state) => {
@@ -89,9 +95,25 @@ export const weatherSlice = createSlice({
         return;
       }
 
-      const res = action.payload.res.hours.filter(
-        (hour, index) => index > 0 && (index - 12) % 24 === 0
-      );
+      const res = action.payload.res.hours
+        .filter((hour, index) => index > 0 && (index - 12) % 24 === 0)
+        .map((day: ITempInfo) => ({
+          airTemperature: {
+            noaa: Math.floor(day.airTemperature.noaa),
+            morn: 0,
+            night: 0,
+          },
+          time: day.time,
+          pressure: {
+            noaa: Math.floor(day.pressure.noaa),
+          },
+          humidity: {
+            noaa: Math.floor(day.humidity.noaa),
+          },
+          windSpeed: {
+            noaa: Math.floor(day.windSpeed.noaa * 2.237),
+          },
+        }));
       const morn = action.payload.res.hours.filter(
         (hour, index) => index > 0 && (index - 8) % 24 === 0
       );
@@ -100,12 +122,12 @@ export const weatherSlice = createSlice({
         (hour, index) => index > 0 && (index - 20) % 24 === 0
       );
       res.forEach((el, index) => {
-        el.airTemperature.morn = morn[index].airTemperature.noaa;
-        el.airTemperature.night = night[index].airTemperature.noaa;
+        el.airTemperature.morn = Math.floor(morn[index].airTemperature.noaa);
+        el.airTemperature.night = Math.floor(night[index].airTemperature.noaa);
       });
 
       state.stormGlass[action.payload.city.toUpperCase()] = res;
-      state.expiresDate = String(getTomorrow());
+      state.expiresDate = getTomorrow();
       state.isLoading = false;
     },
     [fetchOpenWeatherPosition.pending.type]: (state) => {
@@ -117,13 +139,13 @@ export const weatherSlice = createSlice({
       action: PayloadAction<{ res: ICoord[] }>
     ) => {
       if (action.payload.res?.length) {
-        state.lat = action.payload.res[0].lat;
-        state.lon = action.payload.res[0].lon;
+        state.latitude = +action.payload.res[0].lat;
+        state.longitude = +action.payload.res[0].lon;
       } else {
         state.isLoading = false;
         state.errorOpen = 'error';
-        state.lat = '';
-        state.lon = '';
+        state.latitude = 0;
+        state.longitude = 0;
       }
     },
     [fetchOpenWeatherPosition.rejected.type]: (state) => {

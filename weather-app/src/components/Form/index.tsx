@@ -4,7 +4,7 @@ import { useAppDispatch } from '@/hooks/redux';
 import { tasksSlice } from '@/store/reducers/taskSlice';
 import { Button } from '@/components/components.styled';
 
-import { CustomInput, ErrorText } from './Inputs.styled';
+import { CustomInput, ErrorText, FormBox } from './Inputs.styled';
 
 type IFormData = {
   date: string;
@@ -12,7 +12,7 @@ type IFormData = {
   title: string;
 };
 
-export default function Form({ onCancel }: { onCancel: () => void }) {
+export function Form({ onCancel }: { onCancel: () => void }) {
   const {
     register,
     handleSubmit,
@@ -27,13 +27,13 @@ export default function Form({ onCancel }: { onCancel: () => void }) {
 
   function onSubmit(data: IFormData) {
     const { date, time, title } = data;
-    dispatch(tasksSlice.actions.addTask({ date, time, title }));
+    dispatch(tasksSlice.actions.addTask({ date, time, title, id: Date.now() }));
     reset();
     onCancel();
   }
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
+    <FormBox onSubmit={handleSubmit(onSubmit)}>
       <CustomInput {...register('title', { required: 'Title is required' })} type="text" />
       {errors.title?.type === 'required' && <ErrorText>Title is required</ErrorText>}
       <CustomInput
@@ -50,6 +50,6 @@ export default function Form({ onCancel }: { onCancel: () => void }) {
       <Button type="submit" contained style={{ margin: '1rem auto 0' }}>
         Create
       </Button>
-    </form>
+    </FormBox>
   );
 }

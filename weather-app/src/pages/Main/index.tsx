@@ -4,22 +4,22 @@ import { useAppDispatch, useAppSelector } from '@/hooks/redux';
 import { fetchCity } from '@/store/reducers/citySlice';
 import { weatherSlice } from '@/store/reducers/weatherSlice';
 import usePosition from '@/hooks/usePosition';
-import { Geocoding } from '@/utils';
-import { Clock, EditableInput, Planer, SourceSwitcher, Weather } from '@/components';
+import { geocoding } from '@/utils/api';
+import { Clock, Select, Scheduler, SourceSwitcher, Weather } from '@/components';
 import useProgressiveImage from '@/hooks/lazyLoad';
 
 import { ColumnBox, BackgroundBox, Section } from './Container.styled';
 
-function Main() {
+export function MainPage() {
   const dispatch = useAppDispatch();
   const { city } = useAppSelector((state) => state.citySlice);
   const { latitude, longitude, error } = usePosition();
   const { bgImage } = useAppSelector((state) => state.weatherSlice);
-  const loaded = useProgressiveImage(bgImage);
+  const loadedImg = useProgressiveImage(bgImage);
 
-  async function getPosition() {
+  function getPosition() {
     if (latitude && longitude && !error && !city) {
-      const src = Geocoding(latitude, longitude);
+      const src = geocoding(latitude, longitude);
       dispatch(fetchCity(src));
     }
   }
@@ -27,31 +27,29 @@ function Main() {
   useEffect(() => {
     getPosition();
     if (latitude && longitude) {
-      dispatch(weatherSlice.actions.setPosition({ lat: latitude + '', lon: longitude + '' }));
+      dispatch(weatherSlice.actions.setPosition({ latitude, longitude }));
     }
   }, [latitude, longitude]);
 
   return (
     <ColumnBox
       style={{
-        backgroundImage: `url(${loaded || './шфидщ.png'})`,
+        backgroundImage: `url(${loadedImg || './baseBackground.png'})`,
       }}
     >
       <BackgroundBox
         style={{
-          backgroundImage: `url(${loaded || './шфидщ.png'})`,
+          backgroundImage: `url(${loadedImg || './baseBackground.png'})`,
         }}
       >
         <Section>
           <Clock />
-          <EditableInput />
+          <Select />
           <SourceSwitcher />
         </Section>
-        <Planer />
+        <Scheduler />
         <Weather />
       </BackgroundBox>
     </ColumnBox>
   );
 }
-
-export default Main;

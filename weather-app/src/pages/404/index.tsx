@@ -9,7 +9,7 @@ interface Props {
   goBack?: () => void;
 }
 
-function ErrorPage({ error }: Props) {
+export function ErrorPage({ error }: Props) {
   return (
     <Box>
       <Typography>{error ? 'Sorry.. there was an error' : 'Malformed URL'}</Typography>
@@ -21,5 +21,3 @@ function ErrorPage({ error }: Props) {
     </Box>
   );
 }
-
-export default ErrorPage;

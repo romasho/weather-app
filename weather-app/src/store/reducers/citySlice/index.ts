@@ -1,18 +1,11 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-export interface CityState {
-  city: string;
-  isFirstSource: boolean;
-}
-
 //  "OpenWeather" - false | "StormGlass" - true
 
-const STATE: CityState = {
+const initialState = {
   city: '',
   isFirstSource: false,
 };
-
-const initialState: CityState = STATE;
 
 export const fetchCity = createAsyncThunk('city/fetchCard', async (src: string) => {
   const res = await fetch(src).then((data) => data.json());

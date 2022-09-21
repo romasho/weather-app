@@ -31,6 +31,7 @@ const Section = styled.section`
   @media (max-width: 878px) {
     flex-direction: column;
     align-items: flex-start;
+    position: inherit;
   }
 
   @media (min-width: 1024px) {

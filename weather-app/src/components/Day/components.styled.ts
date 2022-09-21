@@ -25,6 +25,10 @@ export const WeatherBox = styled.div<WeatherBoxProps>`
 export const DetailedWeatherBox = styled(WeatherBox)`
   cursor: auto;
 
+  &:hover {
+    box-shadow: none;
+  }
+
   @media (max-width: 878px) {
     flex-direction: column;
   }

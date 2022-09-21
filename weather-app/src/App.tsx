@@ -9,8 +9,8 @@ function App() {
   return (
     <ErrorBoundary>
       <Routes>
-        <Route path={AppRoutes.MAIN} element={<MainPage />} />
-        <Route path={AppRoutes.ERROR} element={<ErrorPage />} />
+        <Route path={AppRoutes.Main} element={<MainPage />} />
+        <Route path={AppRoutes.Error} element={<ErrorPage />} />
       </Routes>
     </ErrorBoundary>
   );

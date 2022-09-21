@@ -1,6 +1,6 @@
 export enum AppRoutes {
-  ERROR = '*',
-  MAIN = '/',
+  Error = '*',
+  Main = '/',
 }
 
 export const tokenMapbox =

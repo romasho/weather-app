@@ -28,3 +28,9 @@ export const CustomBox = styled.section`
 export const Title = styled(Typography)`
   padding: 10px 10px;
 `;
+
+export const Span = styled.span`
+  font-size: 1.5rem;
+  padding: 0.5rem 1rem;
+  line-height: 1;
+`;

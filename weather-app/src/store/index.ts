@@ -11,7 +11,7 @@ const persistConfig = {
   storage,
 };
 
-const rootReducer = combineReducers({
+export const rootReducer = combineReducers({
   citySlice,
   weatherSlice,
   tasksSlice,
@@ -25,7 +25,3 @@ export const store = configureStore({
 });
 
 export const persistor = persistStore(store);
-
-export type RootState = ReturnType<typeof rootReducer>;
-export type AppStore = typeof store;
-export type AppDispatch = AppStore['dispatch'];

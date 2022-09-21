@@ -5,7 +5,7 @@ interface IPortalProps {
   children: JSX.Element | JSX.Element[];
 }
 
-export default function Portal({ children }: IPortalProps) {
+export function Portal({ children }: IPortalProps) {
   const el = document.createElement('div');
 
   useEffect(() => {

@@ -38,3 +38,9 @@ export const ErrorText = styled.p`
   margin: -8px 14px 0 14px;
   color: #d32f2f;
 `;
+
+export const FormBox = styled.form`
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+`;

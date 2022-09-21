@@ -6,7 +6,7 @@ import { Typography } from '@/components/components.styled';
 
 import { Input, Label, Switch, SwitchContainer } from './switch.styled';
 
-function SourceSwitcher() {
+export function SourceSwitcher() {
   const dispatch = useAppDispatch();
   const [checked, setChecked] = useState(useAppSelector((state) => state.citySlice.isFirstSource));
 
@@ -30,5 +30,3 @@ function SourceSwitcher() {
     </SwitchContainer>
   );
 }
-
-export default SourceSwitcher;

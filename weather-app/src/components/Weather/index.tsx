@@ -8,29 +8,36 @@ import {
   fetchImage,
   fetchOpenWeatherPosition,
 } from '@/store/reducers/weatherSlice/asyncAction';
-import { openWeatherUrl, openWeatherUrlForCord } from '@/utils';
+import { openWeatherUrl, openWeatherUrlForCord } from '@/utils/api';
 
 import { Message, SectionWeather } from './component.styled';
 
-function Weather() {
+export function Weather() {
   const dispatch = useAppDispatch();
   const { city, isFirstSource } = useAppSelector((state) => state.citySlice);
-  const { openWeather, stormGlass, isLoading, errorOpen, errorStorm, lat, lon } = useAppSelector(
-    (state) => state.weatherSlice
-  );
+  const {
+    openWeather,
+    stormGlass,
+    isLoading,
+    errorOpen,
+    errorStorm,
+    latitude,
+    longitude,
+    expiresDate,
+  } = useAppSelector((state) => state.weatherSlice);
 
   useEffect(() => {
-    if (lat && lon) {
+    if (latitude && longitude) {
       if (!Object.prototype.hasOwnProperty.call(openWeather, city.toUpperCase())) {
-        dispatch(fetchOpenWeather({ src: openWeatherUrl(lat, lon), city }));
+        dispatch(fetchOpenWeather({ src: openWeatherUrl(latitude, longitude), city }));
       }
     }
-    if (isFirstSource && lat && lon) {
+    if (isFirstSource && latitude && longitude) {
       if (!Object.prototype.hasOwnProperty.call(stormGlass, city.toUpperCase())) {
-        dispatch(fetchStormGlass({ lat, lng: lon, city }));
+        dispatch(fetchStormGlass({ latitude, longitude, city }));
       }
     }
-  }, [lat, lon, isFirstSource]);
+  }, [latitude, longitude, isFirstSource, expiresDate]);
 
   useEffect(() => {
     dispatch(fetchOpenWeatherPosition({ src: openWeatherUrlForCord(city) }));
@@ -38,7 +45,7 @@ function Weather() {
     if (openWeather[city.toUpperCase()]) {
       dispatch(fetchImage(openWeather[city.toUpperCase()][0].weather[0].main));
     }
-  }, [city, isFirstSource]);
+  }, [city, isFirstSource, expiresDate]);
 
   return (
     <SectionWeather>
@@ -48,14 +55,14 @@ function Weather() {
         : errorStorm && !stormGlass[city.toUpperCase()]) && (
         <Message>Sorry, something went wrong. Try another source.</Message>
       )}
-      {!lat && <Message>Invalid city name</Message>}
+      {!latitude && <Message>Invalid city name</Message>}
       {!isFirstSource &&
         openWeather[city.toUpperCase()] &&
         openWeather[city.toUpperCase()]
           .slice(0, 7)
           .map((day, index) => (
             <Day
-              day={day.dt * 1000}
+              day={day.dt}
               imgCode={day.weather[0].icon}
               temp={day.temp.day}
               key={day.dt}
@@ -83,12 +90,10 @@ function Weather() {
               humidity={day.humidity.noaa}
               night={day.airTemperature.night}
               morn={day.airTemperature.morn}
-              speed={Math.floor(day.windSpeed.noaa * 2.237)}
+              speed={day.windSpeed.noaa}
               weather={openWeather[city.toUpperCase()][index].weather[0]}
             />
           ))}
     </SectionWeather>
   );
 }
-
-export default Weather;
