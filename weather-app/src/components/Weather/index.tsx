@@ -43,7 +43,7 @@ export function Weather() {
     dispatch(fetchOpenWeatherPosition({ src: openWeatherUrlForCord(city) }));
 
     if (openWeather[city.toUpperCase()]) {
-      dispatch(fetchImage(openWeather[city.toUpperCase()][0].weather[0].main));
+      dispatch(fetchImage(openWeather[city.toUpperCase()][0].weather.main));
     }
   }, [city, isFirstSource, expiresDate, openWeather]);
 
@@ -61,7 +61,7 @@ export function Weather() {
         openWeather[city.toUpperCase()].map((day, index) => (
           <Day
             day={day.dt}
-            imgCode={day.weather[0].icon}
+            imgCode={day.weather.icon}
             temp={day.temp.day}
             key={day.dt}
             index={index}
@@ -70,7 +70,7 @@ export function Weather() {
             night={day.temp.night}
             morn={day.temp.morn}
             speed={day.wind_speed}
-            weather={day.weather[0]}
+            weather={day.weather}
           />
         ))}
       {isFirstSource &&
@@ -78,7 +78,7 @@ export function Weather() {
         stormGlass[city.toUpperCase()].map((day, index) => (
           <Day
             day={Date.parse(day.time)}
-            imgCode={openWeather[city.toUpperCase()][index].weather[0].icon}
+            imgCode={openWeather[city.toUpperCase()][index].weather.icon}
             temp={day.airTemperature.noaa}
             key={day.time}
             index={index}
@@ -87,7 +87,7 @@ export function Weather() {
             night={day.airTemperature.night}
             morn={day.airTemperature.morn}
             speed={day.windSpeed.noaa}
-            weather={openWeather[city.toUpperCase()][index].weather[0]}
+            weather={openWeather[city.toUpperCase()][index].weather}
           />
         ))}
     </SectionWeather>

@@ -29,17 +29,16 @@ export interface IWeatherPerDay {
   pressure: number;
   humidity: number;
   wind_speed: number;
-  weather: [
-    {
-      id: number;
-      icon: string;
-      main: string;
-    }
-  ];
 }
 
+type WeatherArray = WeatherDescription[];
+type WeatherDescription = { id: number; icon: string; main: string };
+
+export type IWeatherPerDayResponse = IWeatherPerDay & { weather: WeatherArray };
+type IWeatherPerDayState = IWeatherPerDay & { weather: WeatherDescription };
+
 export interface IOpenWeatherResponse {
-  daily: IWeatherPerDay[];
+  daily: IWeatherPerDayResponse[];
   timezone: string;
   lat: number;
   lon: number;
@@ -47,7 +46,7 @@ export interface IOpenWeatherResponse {
 }
 
 export interface IOpenWeather {
-  [key: string]: IWeatherPerDay[];
+  [key: string]: IWeatherPerDayState[];
 }
 
 export interface IStormGlass {

@@ -2,11 +2,11 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 import {
   WeatherState,
-  IWeatherPerDay,
   IStormGlassResponse,
   IOpenWeatherResponse,
   ICoord,
   ITempInfo,
+  IWeatherPerDayResponse,
 } from '@/types';
 import { getTomorrow } from '@/utils';
 
@@ -63,14 +63,14 @@ export const weatherSlice = createSlice({
         return;
       }
       state.openWeather[action.payload.city.toUpperCase()] = action.payload.res.daily
-        .map((day: IWeatherPerDay) => ({
+        .map((day: IWeatherPerDayResponse) => ({
           dt: day.dt * 1000,
           temp: {
             day: Math.floor(day.temp.day),
             night: Math.floor(day.temp.night),
             morn: Math.floor(day.temp.morn),
           },
-          weather: day.weather,
+          weather: day.weather[0],
           humidity: Math.floor(day.humidity),
           pressure: Math.floor(day.pressure),
           wind_speed: day.wind_speed,
