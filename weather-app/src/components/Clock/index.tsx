@@ -20,7 +20,7 @@ export function Clock() {
   }
 
   useEffect(() => {
-    const timerID = setInterval(() => tick(), 1000);
+    const timerID = setInterval(tick, 1000);
     return function cleanup() {
       clearInterval(timerID);
     };
@@ -32,6 +32,12 @@ export function Clock() {
   });
   const formattedTime = time.slice(0, -2);
   const timeOfDay = time.slice(-2);
+  const day = date.toLocaleString('en-US', {
+    weekday: 'long',
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+  });
 
   return (
     <div>
@@ -41,12 +47,7 @@ export function Clock() {
       </Typography>
 
       <Typography color="white" fontSize={'2rem'}>
-        {date.toLocaleString('en-US', {
-          weekday: 'long',
-          year: 'numeric',
-          month: 'long',
-          day: 'numeric',
-        })}
+        {day}
       </Typography>
     </div>
   );

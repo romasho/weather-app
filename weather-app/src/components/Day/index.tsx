@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react';
+import { FC, useCallback, useState } from 'react';
 
 import { Modal } from '../Modal';
 
@@ -23,7 +23,7 @@ interface IDayProps {
   weather: any;
 }
 
-export function Day({
+export const Day: FC<IDayProps> = ({
   day,
   imgCode,
   temp,
@@ -34,7 +34,7 @@ export function Day({
   morn,
   speed,
   weather,
-}: IDayProps) {
+}) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const toggleIsOpen = useCallback(() => {
@@ -102,4 +102,4 @@ export function Day({
       </Modal>
     </>
   );
-}
+};

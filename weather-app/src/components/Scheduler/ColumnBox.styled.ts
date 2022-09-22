@@ -15,7 +15,6 @@ export const CustomBox = styled.section`
 
   &::-webkit-scrollbar-track {
     box-shadow: inset 0 0 6px ${(props) => props.theme.colors.main};
-    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0);
     border-radius: 2rem;
   }
 

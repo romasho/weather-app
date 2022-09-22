@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { FC } from 'react';
 
 import { Portal } from '@/components/Portal';
 
@@ -10,7 +10,7 @@ interface IModalProps {
   children?: JSX.Element | JSX.Element[];
 }
 
-export function Modal({ isOpen, onCancel, children }: IModalProps) {
+export const Modal: FC<IModalProps> = ({ isOpen, onCancel, children }) => {
   const handleClick = (e: React.MouseEvent) => {
     if (e.target === e.currentTarget) {
       onCancel();
@@ -31,4 +31,4 @@ export function Modal({ isOpen, onCancel, children }: IModalProps) {
       )}
     </>
   );
-}
+};

@@ -1,4 +1,5 @@
 import AsyncSelect from 'react-select/async';
+import { StylesConfig } from 'react-select';
 
 import { citySlice } from '@/store/reducers/citySlice';
 import { useAppDispatch, useAppSelector } from '@/hooks/redux';
@@ -10,20 +11,21 @@ type Option = {
   label: string;
 };
 
+type IsMulti = false;
+
 export function Select() {
   const { city } = useAppSelector((state) => state.citySlice);
   const dispatch = useAppDispatch();
 
   const onSubmit = (option: Option | null) => {
-    console.log(option?.value);
     if (option?.value) {
       dispatch(citySlice.actions.changeCity(option.value));
     }
   };
 
-  const colorStyles = {
-    control: (styles: any) => ({ ...styles, background: 'none', color: 'white' }),
-    container: (styles: any) => ({
+  const colorStyles: StylesConfig<Option, IsMulti> = {
+    control: (styles) => ({ ...styles, background: 'none', color: 'white' }),
+    container: (styles) => ({
       ...styles,
       background: 'none',
       minWidth: '260px',
@@ -31,7 +33,8 @@ export function Select() {
       color: 'black',
       fontSize: '2rem',
     }),
-    singleValue: (styles: any) => ({ ...styles, color: 'white' }),
+    singleValue: (styles) => ({ ...styles, color: 'white', fontWeight: 'bold' }),
+    input: (styles) => ({ ...styles, color: 'white', fontWeight: 'bold' }),
   };
 
   const promiseOptions = async (inputValue: string) => {

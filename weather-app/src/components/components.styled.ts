@@ -40,7 +40,6 @@ export const Button = styled.button<ButtonPropsType>`
       : ''};
 
   &:hover {
-    -webkit-text-decoration: none;
     text-decoration: none;
     background-color: rgba(184, 193, 236, 0.04);
     ${(props) =>

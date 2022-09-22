@@ -1,11 +1,11 @@
-import { useEffect } from 'react';
+import { FC, useEffect } from 'react';
 import ReactDOM from 'react-dom';
 
 interface IPortalProps {
   children: JSX.Element | JSX.Element[];
 }
 
-export function Portal({ children }: IPortalProps) {
+export const Portal: FC<IPortalProps> = ({ children }) => {
   const el = document.createElement('div');
 
   useEffect(() => {
@@ -17,4 +17,4 @@ export function Portal({ children }: IPortalProps) {
   });
 
   return ReactDOM.createPortal(children, el);
-}
+};

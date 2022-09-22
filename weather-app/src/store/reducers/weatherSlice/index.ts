@@ -62,8 +62,8 @@ export const weatherSlice = createSlice({
         state.errorOpen = 'Not correct request';
         return;
       }
-      state.openWeather[action.payload.city.toUpperCase()] = action.payload.res.daily.map(
-        (day: IWeatherPerDay) => ({
+      state.openWeather[action.payload.city.toUpperCase()] = action.payload.res.daily
+        .map((day: IWeatherPerDay) => ({
           dt: day.dt * 1000,
           temp: {
             day: Math.floor(day.temp.day),
@@ -74,8 +74,8 @@ export const weatherSlice = createSlice({
           humidity: Math.floor(day.humidity),
           pressure: Math.floor(day.pressure),
           wind_speed: day.wind_speed,
-        })
-      );
+        }))
+        .slice(0, 7);
       state.expiresDate = getTomorrow();
       state.isLoading = false;
     },
@@ -126,7 +126,7 @@ export const weatherSlice = createSlice({
         el.airTemperature.night = Math.floor(night[index].airTemperature.noaa);
       });
 
-      state.stormGlass[action.payload.city.toUpperCase()] = res;
+      state.stormGlass[action.payload.city.toUpperCase()] = res.slice(0, 7);
       state.expiresDate = getTomorrow();
       state.isLoading = false;
     },

@@ -1,3 +1,5 @@
+import { FC } from 'react';
+
 import { ReactComponent as DeleteIcon } from '@/assets/deleteIcon.svg';
 import { ITask } from '@/types';
 import theme from '@/theme';
@@ -7,8 +9,10 @@ import { IconButton, Typography } from '@/components/components.styled';
 
 import { TaskWrapper } from './components.styled';
 
-export function Task({ time, title }: Omit<ITask, 'id'>) {
+export const Task: FC<Omit<ITask, 'id'>> = ({ time, title }) => {
   const dispatch = useAppDispatch();
+
+  const handleClick = () => dispatch(tasksSlice.actions.removeTask(title));
 
   return (
     <TaskWrapper>
@@ -19,9 +23,9 @@ export function Task({ time, title }: Omit<ITask, 'id'>) {
       <Typography color={theme.colors.main} fontSize="1.25rem">
         {title}
       </Typography>
-      <IconButton color="primary" onClick={() => dispatch(tasksSlice.actions.removeTask(title))}>
+      <IconButton color="primary" onClick={handleClick}>
         <DeleteIcon />
       </IconButton>
     </TaskWrapper>
   );
-}
+};

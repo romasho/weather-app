@@ -1,21 +1,20 @@
 import styled from 'styled-components';
 
+import { Button } from '@/components/components.styled';
+
+export const ButtonIcon = styled(Button)`
+  margin: 1rem auto 0;
+`;
+
 export const CustomInput = styled.input`
   background-color: #fff;
   color: rgba(0, 0, 0, 0.87);
-  -webkit-transition: box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
   transition: box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
   border-radius: 4px;
   box-shadow: 0px 2px 1px -1px rgb(0 0 0 / 20%), 0px 1px 1px 0px rgb(0 0 0 / 14%),
     0px 1px 3px 0px rgb(0 0 0 / 12%);
   padding: 2px 4px;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
   display: flex;
-  -webkit-align-items: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
   align-items: center;
   max-width: 600px;
   width: 100%;

@@ -13,17 +13,17 @@ interface State {
 }
 
 export class ErrorBoundary extends Component<Props, State> {
-  public state: State = {
+  state: State = {
     hasError: false,
     errorInfo: null,
     error: null,
   };
 
-  public static getDerivedStateFromError(error: Error, errorInfo: ErrorInfo): State {
+  static getDerivedStateFromError(error: Error, errorInfo: ErrorInfo): State {
     return { hasError: true, errorInfo, error };
   }
 
-  public componentDidCatch(error: Error, errorInfo: ErrorInfo) {
+  componentDidCatch(error: Error, errorInfo: ErrorInfo) {
     this.setState({
       error: error,
       errorInfo: errorInfo,
@@ -34,7 +34,7 @@ export class ErrorBoundary extends Component<Props, State> {
     this.setState({ hasError: false });
   }
 
-  public render() {
+  render() {
     if (this.state.hasError) {
       return (
         <>

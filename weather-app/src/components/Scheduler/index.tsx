@@ -4,13 +4,13 @@ import theme from '@/theme';
 import { Modal, Form } from '@/components';
 import { Task } from '@/components';
 import { useAppSelector } from '@/hooks/redux';
-import { getToday } from '@/utils';
 import { Button } from '@/components/components.styled';
+import { selectTodayTasks } from '@/store/selectors';
 
 import { CustomBox, Title, Span } from './ColumnBox.styled';
 
 export function Scheduler() {
-  const { tasks } = useAppSelector((state) => state.tasksSlice);
+  const tasks = useAppSelector(selectTodayTasks);
   const [isOpen, setIsOpen] = useState(false);
 
   const toggleIsOpen = useCallback(() => {
@@ -23,11 +23,9 @@ export function Scheduler() {
         Tasks for today
       </Title>
 
-      {tasks
-        .filter((task) => task.date === getToday())
-        .map((task, index) => (
-          <Task date={task.date} time={task.time} title={task.title} key={task.id} />
-        ))}
+      {tasks.map((task) => (
+        <Task date={task.date} time={task.time} title={task.title} key={task.id} />
+      ))}
       <Button onClick={toggleIsOpen}>
         <Span>+ </Span> Add task
       </Button>

@@ -1,10 +1,10 @@
 import { useForm } from 'react-hook-form';
+import { FC } from 'react';
 
 import { useAppDispatch } from '@/hooks/redux';
 import { tasksSlice } from '@/store/reducers/taskSlice';
-import { Button } from '@/components/components.styled';
 
-import { CustomInput, ErrorText, FormBox } from './Inputs.styled';
+import { ButtonIcon, CustomInput, ErrorText, FormBox } from './Inputs.styled';
 
 type IFormData = {
   date: string;
@@ -12,7 +12,11 @@ type IFormData = {
   title: string;
 };
 
-export function Form({ onCancel }: { onCancel: () => void }) {
+type Props = {
+  onCancel: () => void;
+};
+
+export const Form: FC<Props> = ({ onCancel }) => {
   const {
     register,
     handleSubmit,
@@ -47,9 +51,9 @@ export function Form({ onCancel }: { onCancel: () => void }) {
       {errors.date?.type === 'min' && <ErrorText>The minimum date is today</ErrorText>}
       <CustomInput type="time" {...register('time', { required: 'Time is required' })} />
       {errors.time?.type === 'required' && <ErrorText>Time is required</ErrorText>}
-      <Button type="submit" contained style={{ margin: '1rem auto 0' }}>
+      <ButtonIcon type="submit" contained>
         Create
-      </Button>
+      </ButtonIcon>
     </FormBox>
   );
-}
+};
